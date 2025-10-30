@@ -106,7 +106,7 @@ Certificates MUST include the signedDocumentBinding extension, binding the certi
 The signedDocumentBinding extension binds a certificate to a specific signed content. When present, conforming CAs SHOULD mark this extension as non-critical.
 
 
-    name           id-ce-signedDocumentBinding
+    name           id-pe-signedDocumentBinding
     OID            { id-pe TBD }
     syntax         SignedDocumentBinding
     criticality    SHOULD be FALSE
