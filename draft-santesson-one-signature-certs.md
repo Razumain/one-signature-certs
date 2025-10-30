@@ -9,13 +9,13 @@ submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 date: 2025-10-30
 consensus: true
 v: 3
-area: Security
+# area: Security
 keyword:
  - certificate
  - signature
  - X.509
 venue:
-  github: Razumain/one-signature-certs
+  github: "Razumain/one-signature-certs"
 
 author:
   -
