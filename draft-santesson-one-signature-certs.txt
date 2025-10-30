@@ -2,14 +2,14 @@
 
 
 
-WG Working Group                                              Y. N. Here
-Internet-Draft                                    Your Organization Here
-Intended status: Informational                           30 October 2025
+Network Working Group                                       S. Santesson
+Internet-Draft                                           IDsec Solutions
+Intended status: Standards Track                         30 October 2025
 Expires: 3 May 2026
 
 
-                           TODO - Your title
-                  draft-todo-yourname-protocol-latest
+                       One Signature Certificates
+               draft-santesson-one-signature-certs-latest
 
 Abstract
 
@@ -19,17 +19,12 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-todo-yourname-
-   protocol/.
-
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:WG@example.com), which is archived at
-   https://example.com/WG.
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-santesson-one-signature-
+   certs/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/Razumain/one-signature-certs.
 
 Status of This Memo
 
@@ -99,6 +94,12 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
@@ -109,6 +110,9 @@ Acknowledgments
 
 Author's Address
 
-   Your Name Here
-   Your Organization Here
-   Email: your.email@example.com
+   Stefan Santesson
+   IDsec Solutions AB
+   Forskningsbyn Ideon
+   SE-223 70 Lund
+   Sweden
+   Email: sts@aaa-sec.com
