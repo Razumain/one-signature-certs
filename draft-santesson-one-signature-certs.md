@@ -2,7 +2,7 @@
 ###
 # Internet-Draft Markdown Template
 #
-# Rename this file from draft-santesson-one-signature-certs-00.md to get started.
+# Rename this file from draft-santesson-one-signature-certs.md to get started.
 # Draft name format is "draft-<yourname>-<workgroup>-<name>.md".
 #
 # For initial setup, you only need to edit the first block of fields.
@@ -21,9 +21,10 @@
 ###
 title: "One Signature Certificates"
 abbrev: "OSC"
+ipr: "trust200902"
 category: std
 
-docname: draft-santesson-one-signature-certs-00
+docname: draft-santesson-one-signature-certs-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 date: 2025-10-30
 consensus: true
