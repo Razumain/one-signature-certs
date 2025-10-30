@@ -106,17 +106,16 @@ Certificates MUST include the signedDocumentBinding extension, binding the certi
 The signedDocumentBinding extension binds a certificate to a specific signed content. When present, conforming CAs SHOULD mark this extension as non-critical.
 
 
-```
-name           id-ce-noRevAvail
-OID            { id-ce 56 }
-syntax         NULL (i.e. '0500'H is the DER encoding)
-criticality    SHOULD be FALSE
+    name           id-ce-noRevAvail
+    OID            { id-ce 56 }
+    syntax         NULL (i.e. '0500'H is the DER encoding)
+    criticality    SHOULD be FALSE
 
-SignedDocumentBinding ::= SEQUENCE {
-dataTbsHash     OCTET STRING,
-hashAlg         OBJECT IDENTIFIER,
-bindingType     UTF8String OPTIONAL }
-```
+    SignedDocumentBinding ::= SEQUENCE {
+    dataTbsHash     OCTET STRING,
+    hashAlg         OBJECT IDENTIFIER,
+    bindingType     UTF8String OPTIONAL }
+
 
 The dataTbsHash field SHALL contain a hash of the data to be signed.
 
@@ -132,41 +131,39 @@ TODO Define identified procedures for handling CMS ESSCertV2 and ETSI profiles X
 
 # ASN.1 Module
 
-```
-<CODE BEGINS>
-   NoRevAvailExtn
-     { iso(1) identified-organization(3) dod(6) internet(1)
-       security(5) mechanisms(5) pkix(7) id-mod(0)
-       id-mod-signedDocumentBinding(TBD) }
+    <CODE BEGINS>
+       NoRevAvailExtn
+         { iso(1) identified-organization(3) dod(6) internet(1)
+           security(5) mechanisms(5) pkix(7) id-mod(0)
+           id-mod-signedDocumentBinding(TBD) }
 
-   DEFINITIONS IMPLICIT TAGS ::=
-   BEGIN
+       DEFINITIONS IMPLICIT TAGS ::=
+       BEGIN
 
-   IMPORTS
-     EXTENSION, id-pkix, id-pe
-     FROM PKIX-CommonTypes-2009  -- RFC 5912
-       { iso(1) identified-organization(3) dod(6) internet(1)
-         security(5) mechanisms(5) pkix(7) id-mod(0)
-         id-mod-pkixCommon-02(57) } ;
+       IMPORTS
+         EXTENSION, id-pkix, id-pe
+         FROM PKIX-CommonTypes-2009  -- RFC 5912
+           { iso(1) identified-organization(3) dod(6) internet(1)
+             security(5) mechanisms(5) pkix(7) id-mod(0)
+             id-mod-pkixCommon-02(57) } ;
 
-   -- signedDocumentBinding Certificate Extension
+       -- signedDocumentBinding Certificate Extension
 
-   ext-SignedDocumentBinding EXTENSION ::= {
-     SYNTAX SignedDocumentBinding
-     IDENTIFIED BY id-pe-signedDocumentBinding }
+       ext-SignedDocumentBinding EXTENSION ::= {
+         SYNTAX SignedDocumentBinding
+         IDENTIFIED BY id-pe-signedDocumentBinding }
 
-   SignedDocumentBinding ::= SEQUENCE {
-     dataTbsHash     OCTET STRING,
-     hashAlg         OBJECT IDENTIFIER,
-     bindingType     UTF8String }
+       SignedDocumentBinding ::= SEQUENCE {
+         dataTbsHash     OCTET STRING,
+         hashAlg         OBJECT IDENTIFIER,
+         bindingType     UTF8String }
 
-   -- signedDocumentBinding Certificate Extension OID
+       -- signedDocumentBinding Certificate Extension OID
 
-   id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe TBD }
+       id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe TBD }
 
-   END
- <CODE ENDS>
-```
+       END
+     <CODE ENDS>
 
 # Security Considerations
 
