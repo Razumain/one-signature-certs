@@ -204,7 +204,7 @@ Table of Contents
    extension as non-critical.
 
    name           id-ce-signedDocumentBinding
-   OID            { id-ce TBD }
+   OID            { id-pe TBD }
    syntax         SignedDocumentBinding
    criticality    SHOULD be FALSE
 
