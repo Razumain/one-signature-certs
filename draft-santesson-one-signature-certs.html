@@ -1288,9 +1288,9 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3.1-1">The signedDocumentBinding extension binds a certificate to a specific signed content. When present, conforming CAs <span class="bcp14">SHOULD</span> mark this extension as non-critical.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.1-2">
 <pre>
-name           id-ce-noRevAvail
-OID            { id-ce 56 }
-syntax         NULL (i.e. '0500'H is the DER encoding)
+name           id-ce-signedDocumentBinding
+OID            { id-ce TBD }
+syntax         SignedDocumentBinding
 criticality    SHOULD be FALSE
 
 SignedDocumentBinding ::= SEQUENCE {
