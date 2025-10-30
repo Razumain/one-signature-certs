@@ -1,0 +1,321 @@
+
+
+
+
+LAMPS                                                       S. Santesson
+Internet-Draft                                           IDsec Solutions
+Intended status: Standards Track                         30 October 2025
+Expires: 3 May 2026
+
+
+                       One Signature Certificates
+               draft-santesson-one-signature-certs-latest
+
+Abstract
+
+   Electronic signatures based on multipurpose expiring certificates
+   that may be revoked introduce many challenges when a signed document
+   has to be maintained over time.  Solutions include timestamping,
+   storing revocation records and advanced verification procedures.
+   This draft introduces a new type of certificates for a key that is
+   used and bound to just one signing instance.  The certificate is
+   created at the time of signing, and the signature key is destroyed
+   after signing is completed.  These certificates never expire and are
+   never revoked, which drastically reduce the burden of future
+   signature validation.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-santesson-one-signature-
+   certs/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/Razumain/one-signature-certs.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 3 May 2026.
+
+Copyright Notice
+
+   Copyright (c) 2025 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Basic features
+       1.1.1.  Revocation
+   2.  Conventions and Definitions
+   3.  Certificate content
+     3.1.  The signedDocumentBinding extension
+     3.2.  Defined bindingType identifiers
+   4.  ASN.1 Module
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
+   Acknowledgments
+   Author's Address
+
+1.  Introduction
+
+   The landscape of server-based signing services has changed over the
+   last decades.  During the past years one type of signature service
+   has gained a lot of traction where the signing key and signing
+   certificate are created for each instance of signing, rather than re-
+   using a static key and certificate over time.
+
+   Some reasons why this type of signature services has been successful
+   are:
+
+   *  The certificate will always have a predictable validity time from
+      the time of signing
+
+   *  The time of signing is guaranteed by the certificate issue date
+
+   *  The identity information in the certificate can be adapted to the
+      signing context for each instance of signing
+
+   *  Revocation of signing certificates is practically non-existent
+      despite many years of operation and millions of signatures.
+
+   *  Service providers are not bound to using the signature service
+      where the signer's key and certificate is located, but can choose
+      one signature service it integrates with that holds no pre-stored
+      user keys and certificates.
+
+   While this type of signature service solves a lot of problems, it
+   still suffers from the complexity caused by expiring signing
+   certificates.  One solution to this problem is the Signature
+   Validation Token (SVT) [RFC9321] where future validation can rely on
+   a previous successful validation rather than making a new re-
+   validation based on aging data.
+
+   This document takes this one step further and allows future re-
+   validation at any time in the future as long as trust in the CA
+   certificate can be established.
+
+1.1.  Basic features
+
+   One signature certificates have the following common characteristics:
+
+   *  They never expire
+
+   *  They are never revoked
+
+   *  They are bound to a specific document content
+
+   *  They assert that the corresponding private key was destroyed after
+      signing
+
+1.1.1.  Revocation
+
+   Traditional certificates that are re-used over time have many
+   legitimate reasons for revocation, such as if the private key is lost
+   or compromised.  This can lead to large volumes of revocation data.
+
+   The fact that the same key is used many times exposes the key for the
+   risk of unauthorized usage or theft.  When many objects are signed
+   with the same key, the risk of exposure and the number of affected
+   signed documents upon revocation increases, unless properly
+   timestamped and properly verified.
+
+   When a signing key is used only once, that risk of exposure is
+   drastically reduced, and it has been shown that most usages of
+   dedicated keys and certificates no longer require revocation.
+
+   No CA can guarantee that a certificate is correctly issued.  What the
+   CA does is to attest that a certain procedure was followed when the
+   certificate was issued, and the certificate itself is an attestation
+   that this process was followed successfully when the signature was
+   created.  Certificates issued according to this profile therefore
+   only attest to the validity at the time of issuance and signing,
+   rather than a retroactive state at the time of validation.  This
+   profile is intended for those applications where this declaration of
+   validity is relevant and useful.
+
+   Applications that require traditional revocation checking that
+   provides the state at the time of validation MUST NOT use this
+   profile.
+
+   An example usage where this is useful is in services where the signed
+   document is stored as an internal evidence record, such as when a Tax
+   agency allows citizens to sign their tax declarations.  This record
+   is then pulled out and used only in case of a dispute where the
+   identified signer challenges the signature.  A revocation service is
+   less likely to contribute to this process.  If the challenge is
+   successful, the signed document will be removed without affecting any
+   other signed documents in the archive.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Certificate content
+
+   Conforming certificates SHALL meet all requirements of this section.
+
+   Certificates MUST indicate that a certificate has no well-defined
+   expiration date by setting the notAfter field to the GeneralizedTime
+   value 99991231235959Z, as defined in [RFC5280].
+
+   Certificates MUST include the id-ce-noRevAvail extension in
+   compliance with [RFC9608], indicating that this certificate is not
+   supported by any revocation mechanism.
+
+   Certificates MUST include the signedDocumentBinding extension,
+   binding the certificate to a specific signed content.
+
+3.1.  The signedDocumentBinding extension
+
+   The signedDocumentBinding extension binds a certificate to a specific
+   signed content.  When present, conforming CAs SHOULD mark this
+   extension as non-critical.
+
+   name           id-ce-noRevAvail
+   OID            { id-ce 56 }
+   syntax         NULL (i.e. '0500'H is the DER encoding)
+   criticality    SHOULD be FALSE
+
+   SignedDocumentBinding ::= SEQUENCE {
+   dataTbsHash     OCTET STRING,
+   hashAlg         OBJECT IDENTIFIER,
+   bindingType     UTF8String OPTIONAL }
+
+   The dataTbsHash field SHALL contain a hash of the data to be signed.
+
+   The hashAlg field SHALL contain the OID of the hash algorithm used to
+   generate the dataTbsHash value.
+
+   The bindingType field MAY contain an optional identifier that defines
+   how the data to be signed is derived from the document to be signed.
+   When omitted, data to be signed is identical to the data signed by
+   the generated signature.  Some signature standards, such as CMS and
+   ETSI signature profiles includes an option or requirement to sign the
+   signer certificate.  This reference to the signer certificate MUST be
+   omitted from the hashed dataTbsHash calculation to avoid circular
+   dependency.  The process to exclude the signer certificate is defined
+   by the bindingType identifier
+
+3.2.  Defined bindingType identifiers
+
+   TODO Define identified procedures for handling CMS ESSCertV2 and ETSI
+   profiles XAdES, JAdES and PAdES.  (CAdES is equal to ESSCertV2)
+
+4.  ASN.1 Module
+
+   <CODE BEGINS>
+      NoRevAvailExtn
+        { iso(1) identified-organization(3) dod(6) internet(1)
+          security(5) mechanisms(5) pkix(7) id-mod(0)
+          id-mod-signedDocumentBinding(TBD) }
+
+      DEFINITIONS IMPLICIT TAGS ::=
+      BEGIN
+
+      IMPORTS
+        EXTENSION, id-pkix, id-pe
+        FROM PKIX-CommonTypes-2009  -- RFC 5912
+          { iso(1) identified-organization(3) dod(6) internet(1)
+            security(5) mechanisms(5) pkix(7) id-mod(0)
+            id-mod-pkixCommon-02(57) } ;
+
+      -- signedDocumentBinding Certificate Extension
+
+      ext-SignedDocumentBinding EXTENSION ::= {
+        SYNTAX SignedDocumentBinding
+        IDENTIFIED BY id-pe-signedDocumentBinding }
+
+      SignedDocumentBinding ::= SEQUENCE {
+        dataTbsHash     OCTET STRING,
+        hashAlg         OBJECT IDENTIFIER,
+        bindingType     UTF8String }
+
+      -- signedDocumentBinding Certificate Extension OID
+
+      id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe TBD }
+
+      END
+   <CODE ENDS>
+
+5.  Security Considerations
+
+   TODO Security
+
+6.  IANA Considerations
+
+   This document has no IANA actions.
+
+7.  References
+
+7.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9608]  Housley, R., Okubo, T., and J. Mandel, "No Revocation
+              Available for X.509 Public Key Certificates", RFC 9608,
+              DOI 10.17487/RFC9608, June 2024,
+              <https://www.rfc-editor.org/rfc/rfc9608>.
+
+7.2.  Informative References
+
+   [RFC9321]  Santesson, S. and R. Housley, "Signature Validation
+              Token", RFC 9321, DOI 10.17487/RFC9321, October 2022,
+              <https://www.rfc-editor.org/rfc/rfc9321>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Author's Address
+
+   Stefan Santesson
+   IDsec Solutions AB
+   Forskningsbyn Ideon
+   SE-223 70 Lund
+   Sweden
+   Email: sts@aaa-sec.com
