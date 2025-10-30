@@ -34,6 +34,7 @@ normative:
   RFC2119:
   RFC5280:
   RFC8174:
+  RFC9608:
 
 informative:
   RFC9321:
@@ -92,10 +93,80 @@ An example usage where this is useful is in services where the signed document i
 
 # Certificate content
 
-Certificates issued according to this profile SHALL meet all requirements of this section.
+Conforming certificates SHALL meet all requirements of this section.
 
-To indicate that a certificate has no well-defined expiration date, the notAfter field SHALL be assigned the GeneralizedTime value 99991231235959Z, as defined in {{RFC5280}}
+Certificates MUST indicate that a certificate has no well-defined expiration date by setting the notAfter field to the GeneralizedTime value 99991231235959Z, as defined in {{RFC5280}}.
 
+Certificates MUST include the id-ce-noRevAvail extension in compliance with {{RFC9608}}, indicating that this certificate is not supported by any revocation mechanism.
+
+Certificates MUST include the signedDocumentBinding extension, binding the certificate to a specific signed content.
+
+## The signedDocumentBinding extension
+
+The signedDocumentBinding extension binds a certificate to a specific signed content. When present, conforming CAs SHOULD mark this extension as non-critical.
+
+
+```
+name           id-ce-noRevAvail
+OID            { id-ce 56 }
+syntax         NULL (i.e. '0500'H is the DER encoding)
+criticality    SHOULD be FALSE
+
+SignedDocumentBinding ::= SEQUENCE {
+dataTbsHash     OCTET STRING,
+hashAlg         OBJECT IDENTIFIER,
+bindingType     UTF8String OPTIONAL }
+```
+
+The dataTbsHash field SHALL contain a hash of the data to be signed.
+
+The hashAlg field SHALL contain the OID of the hash algorithm used to generate the dataTbsHash value.
+
+The bindingType field MAY contain an optional identifier that defines how the data to be signed is derived from the document to be signed.
+When omitted, data to be signed is identical to the data signed by the generated signature. Some signature standards, such as CMS and ETSI signature profiles includes an option or requirement to sign the signer certificate. This reference to the signer certificate MUST be omitted from the hashed dataTbsHash calculation to avoid circular dependency. The process to exclude the signer certificate is defined by the bindingType identifier
+
+## Defined bindingType identifiers
+
+TODO Define identified procedures for handling CMS ESSCertV2 and ETSI profiles XAdES, JAdES and PAdES. (CAdES is equal to ESSCertV2)
+
+
+# ASN.1 Module
+
+```
+<CODE BEGINS>
+   NoRevAvailExtn
+     { iso(1) identified-organization(3) dod(6) internet(1)
+       security(5) mechanisms(5) pkix(7) id-mod(0)
+       id-mod-signedDocumentBinding(TBD) }
+
+   DEFINITIONS IMPLICIT TAGS ::=
+   BEGIN
+
+   IMPORTS
+     EXTENSION, id-pkix, id-pe
+     FROM PKIX-CommonTypes-2009  -- RFC 5912
+       { iso(1) identified-organization(3) dod(6) internet(1)
+         security(5) mechanisms(5) pkix(7) id-mod(0)
+         id-mod-pkixCommon-02(57) } ;
+
+   -- signedDocumentBinding Certificate Extension
+
+   ext-SignedDocumentBinding EXTENSION ::= {
+     SYNTAX SignedDocumentBinding
+     IDENTIFIED BY id-pe-signedDocumentBinding }
+
+   SignedDocumentBinding ::= SEQUENCE {
+     dataTbsHash     OCTET STRING,
+     hashAlg         OBJECT IDENTIFIER,
+     bindingType     UTF8String }
+
+   -- signedDocumentBinding Certificate Extension OID
+
+   id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe TBD }
+
+   END
+ <CODE ENDS>
+```
 
 # Security Considerations
 
