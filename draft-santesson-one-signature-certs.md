@@ -107,7 +107,7 @@ The signedDocumentBinding extension binds a certificate to a specific signed con
 
 
     name           id-ce-signedDocumentBinding
-    OID            { id-ce TBD }
+    OID            { id-pe TBD }
     syntax         SignedDocumentBinding
     criticality    SHOULD be FALSE
 
