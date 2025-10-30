@@ -106,9 +106,9 @@ Certificates MUST include the signedDocumentBinding extension, binding the certi
 The signedDocumentBinding extension binds a certificate to a specific signed content. When present, conforming CAs SHOULD mark this extension as non-critical.
 
 
-    name           id-ce-noRevAvail
-    OID            { id-ce 56 }
-    syntax         NULL (i.e. '0500'H is the DER encoding)
+    name           id-ce-signedDocumentBinding
+    OID            { id-ce TBD }
+    syntax         SignedDocumentBinding
     criticality    SHOULD be FALSE
 
     SignedDocumentBinding ::= SEQUENCE {
