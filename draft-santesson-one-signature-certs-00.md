@@ -2,7 +2,7 @@
 ###
 # Internet-Draft Markdown Template
 #
-# Rename this file from draft-todo-yourname-protocol.md to get started.
+# Rename this file from draft-santesson-one-signature-certs-00.md to get started.
 # Draft name format is "draft-<yourname>-<workgroup>-<name>.md".
 #
 # For initial setup, you only need to edit the first block of fields.
@@ -19,37 +19,39 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
-category: info
+title: "One Signature Certificates"
+abbrev: "OSC"
+category: std
 
-docname: draft-todo-yourname-protocol-latest
+docname: draft-santesson-one-signature-certs
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
-date:
+date: 2025-10-30
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: Security
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - certificate
+ - signature
+ - X.509
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  github: Razumain/one-signature-certs
 
 author:
- -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+  -
+    ins: S. Santesson
+    name: Stefan Santesson
+    org: IDsec Solutions AB
+    abbrev: IDsec Solutions
+    street: Forskningsbyn Ideon
+    city: Lund
+    code: "223 70"
+    country: SE
+    email: sts@aaa-sec.com
 
 normative:
+  RFC2119:
+  RFC5280:
 
 informative:
 
