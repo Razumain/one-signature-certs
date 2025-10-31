@@ -32,9 +32,67 @@ author:
 
 normative:
   RFC2119:
+  RFC5035:
   RFC5280:
+  RFC5652:
+  RFC7515:
   RFC8174:
   RFC9608:
+  XMLDSIG11:
+    title: "XML Signature Syntax and Processing Version 1.1"
+    author:
+      -
+        ins: D. Eastlake
+        name: Donald Eastlake
+      -
+        ins: J. Reagle
+        name: Joseph Reagle
+      -
+        ins: D. Solo
+        name: David Solo
+      -
+        ins: F. Hirsch
+        name: Frederick Hirsch
+      -
+        ins: M. Nystrom
+        name: Magnus Nystrom
+      -
+        ins: T. Roessler
+        name: Thomas Roessler
+      -
+        ins: K. Yiu
+        name: Kelvin Yiu
+    date: 2013-04-11
+    seriesinfo:
+      "W3C": "Proposed Recommendation"
+  ISOPDF2:
+    title: "Document management -- Portable document format -- Part 2: PDF 2.0"
+    author:
+      org: ISO
+    date: 2017-07
+    seriesinfo:
+      "ISO": "32000-2"
+  XADES:
+    title: "Electronic Signatures and Infrastructures (ESI); XAdES digital signatures; Part 1: Building blocks and XAdES baseline signatures"
+    author:
+      org: ETSI
+    date: 2024-07
+    seriesinfo:
+      "ETSI": "EN 319 132-1 v1.3.1"
+  PADES:
+    title: "Electronic Signatures and Infrastructures (ESI); PAdES digital signatures; Part 1: Building blocks and PAdES baseline signatures"
+    author:
+      org: ETSI
+    date: 2024-01
+    seriesinfo:
+      "ETSI": "EN 319 142-1 v1.2.1"
+  CADES:
+    title: "Electronic Signatures and Infrastructures (ESI); CAdES digital signatures; Part 1: Building blocks and CAdES baseline signatures"
+    author:
+      org: ETSI
+    date: 2021-10
+    seriesinfo:
+      "ETSI": "EN 319 122-1 v1.2.1"
 
 informative:
   RFC9321:
@@ -43,7 +101,7 @@ informative:
 
 --- abstract
 
-Electronic signatures based on multipurpose expiring certificates that may be revoked introduce many challenges when a signed document has to be maintained over time. Solutions include timestamping, storing revocation records and advanced verification procedures. This draft introduces a new type of certificates for a key that is used and bound to just one signing instance. The certificate is created at the time of signing, and the signature key is destroyed after signing is completed. These certificates never expire and are never revoked, which drastically reduce the burden of future signature validation.
+This document defines a profile for one-time-use certificates that are issued for a single signing operation. Each certificate is created at the time of signing and bound to the signed content. The associated signing key is immediately destroyed after use, and the certificate never expires and is never revoked. This simplifies long-term validation by removing the need for revocation or expiration handling.
 
 --- middle
 
@@ -126,13 +184,76 @@ When omitted, data to be signed is identical to the data signed by the generated
 
 ## Defined bindingType identifiers
 
-TODO Define identified procedures for handling CMS ESSCertV2 and ETSI profiles XAdES, JAdES and PAdES. (CAdES is equal to ESSCertV2)
+The bindingType field defines how the data to be signed (dataTbsHash) is derived from the signed document.
+This field identifies a deterministic procedure for selecting the portion of the signed content that is included in the hash computation.
+When the field is omitted, the rules for the default binding type apply.
+
+The purpose of the dataTbsHash value is to bind the certificate to the document being signed, not to protect the document’s integrity.
+The integrity of the signed content is provided by the signature itself.
+If any byte of the signed document is modified, the calculated hash will no longer match the certificate.
+Therefore, the dataTbsHash enables validators and relying parties to confirm that the certificate was issued for the exact content that was signed.
+
+Validators SHOULD verify that the signed document matches the certificate’s binding information.
+This verification is not required for the signature to validate successfully but provides an additional safeguard against misuse or substitution of certificates.
+
+### Default Binding
+
+Identifier: "default"
+
+The default binding applies when the bindingType field is absent or set to "default".
+In this case, the dataTbsHash value is the hash of the exact data that is hashed and signed by the signature format in use.
+
+Examples include:
+- For XML Signatures {{XMLDSIG11}}, the hash of the SignedInfo element.
+- For CMS Signatures {{RFC5652}}, the DER-encoded SignedAttributes structure.
+- For other formats, the data structure input directly to the signature algorithm.
+
+This bindingType MUST NOT be used when the data to be signed includes either the signer certificate itself or a hash of the signer certificate. This includes JWS and COSE signed documents that can include signer certificates in the protected header. JWS signatures {{RFC7515}} MUST use the "jws" bindingType and COSE signatures {{RFC8152}} MUST use the "cose" binding type.
+
+This document defines a set of bindingType identifiers. Additional bindingType identifiers MAY be defined by future specifications.
+
+### CAdES Binding
+
+Identifier: "cades"
+
+For CMS {{RFC5652}} or ETSI CAdES {{CADES}} signatures incorporating SigningCertificate or SigningCertificateV2 attributes {{RFC5035}} in signedAttrs,
+the dataTbsHash value is computed over the DER encoding of SignerInfo excluding any instances of SigningCertificate or SigningCertificateV2 attributes from the SignedAttributes set.
+
+This bindingType also applies to PDF {{ISOPDF2}} and ETSI PAdES {{PADES}} signed documents when applicable due to its use of CMS for signing.
+
+### XAdES Binding
+
+Identifier: "xades"
+
+For ETSI XML Advanced Electronic Signatures {{XADES}}, the dataTbsHash value is computed over the canonicalized SignedInfo element,
+with any Reference elements whose Type attribute equals "http://uri.etsi.org/01903#SignedProperties" removed prior to hashing.
+This ensures that the SignedProperties element, which may contain references to the signing certificate, does not create a circular dependency. Extraction of the Reference element MUST be done by removing only the characters from the leading <Reference> tag up to and including the ending </Reference> tag, preserving all other bytes of SignedInfo unchanged, including any white space or line feeds.
+
+Note: This operation is purely textual and does not require XML parsing beyond locating the tag boundaries.
+
+### JWS Binding
+
+Identifier: "jws"
+
+For JSON Web Signatures (JWS) {{RFC7515}}, the dataTbsHash value is computed over the payload only.
+The protected header and any unprotected header parameters MUST NOT be included in the hash calculation.
+
+This exclusion avoids circular dependencies where certificate data may appear in the protected header.
+
+### COSE Binding
+
+Identifier: "cose"
+
+For COSE signatures {{RFC8152}}, the dataTbsHash value is computed over the payload only.
+The protected header and any unprotected header parameters MUST NOT be included in the hash calculation.
+
+This exclusion avoids circular dependencies where certificate data may appear in the protected header.
 
 
 # ASN.1 Module
 
     <CODE BEGINS>
-       NoRevAvailExtn
+       SignedDocumentBindingExtn
          { iso(1) identified-organization(3) dod(6) internet(1)
            security(5) mechanisms(5) pkix(7) id-mod(0)
            id-mod-signedDocumentBinding(TBD) }
@@ -156,7 +277,7 @@ TODO Define identified procedures for handling CMS ESSCertV2 and ETSI profiles X
        SignedDocumentBinding ::= SEQUENCE {
          dataTbsHash     OCTET STRING,
          hashAlg         OBJECT IDENTIFIER,
-         bindingType     UTF8String }
+         bindingType     UTF8String OPTIONAL }
 
        -- signedDocumentBinding Certificate Extension OID
 
@@ -167,12 +288,11 @@ TODO Define identified procedures for handling CMS ESSCertV2 and ETSI profiles X
 
 # Security Considerations
 
-TODO Security
-
+TODO Security Considerations. Including text on reliance on certificates without revocation.
 
 # IANA Considerations
 
-This document has no IANA actions.
+TBD IANA registry for bindingType identifiers
 
 
 --- back
