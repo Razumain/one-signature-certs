@@ -246,6 +246,9 @@ Table of Contents
    for the signature to validate successfully but provides an additional
    safeguard against misuse or substitution of certificates.
 
+   This document defines a set of bindingType identifiers.  Additional
+   bindingType identifiers MAY be defined by future specifications.
+
 3.2.1.  Default Binding
 
    Identifier: "default"
@@ -266,9 +269,6 @@ Table of Contents
    include signer certificates in the protected header.  JWS signatures
    [RFC7515] MUST use the "jws" bindingType and COSE signatures
    [RFC8152] MUST use the "cose" binding type.
-
-   This document defines a set of bindingType identifiers.  Additional
-   bindingType identifiers MAY be defined by future specifications.
 
 3.2.2.  CAdES Binding
 
