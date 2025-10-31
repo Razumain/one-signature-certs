@@ -180,8 +180,7 @@ The dataTbsHash field SHALL contain a hash of the data to be signed.
 
 The hashAlg field SHALL contain the OID of the hash algorithm used to generate the dataTbsHash value.
 
-The bindingType field MAY contain an optional identifier that defines how the data to be signed is derived from the document to be signed.
-When omitted, data to be signed is identical to the data signed by the generated signature. Some signature standards, such as CMS and ETSI signature profiles includes an option or requirement to sign the signer certificate. This reference to the signer certificate MUST be omitted from the hashed dataTbsHash calculation to avoid circular dependency. The process to exclude the signer certificate is defined by the bindingType identifier
+The bindingType field MAY contain an identifier that specifies how the data to be signed is derived from the document to be signed. When this field is omitted, the binding type identifier "default" is implied.
 
 ## Defined bindingType identifiers
 
