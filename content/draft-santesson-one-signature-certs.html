@@ -1318,8 +1318,7 @@ bindingType     UTF8String OPTIONAL }
 </div>
 <p id="section-3.1-3">The dataTbsHash field <span class="bcp14">SHALL</span> contain a hash of the data to be signed.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.1-4">The hashAlg field <span class="bcp14">SHALL</span> contain the OID of the hash algorithm used to generate the dataTbsHash value.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">The bindingType field <span class="bcp14">MAY</span> contain an optional identifier that defines how the data to be signed is derived from the document to be signed.
-When omitted, data to be signed is identical to the data signed by the generated signature. Some signature standards, such as CMS and ETSI signature profiles includes an option or requirement to sign the signer certificate. This reference to the signer certificate <span class="bcp14">MUST</span> be omitted from the hashed dataTbsHash calculation to avoid circular dependency. The process to exclude the signer certificate is defined by the bindingType identifier<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">The bindingType field <span class="bcp14">MAY</span> contain an identifier that specifies how the data to be signed is derived from the document to be signed. When this field is omitted, the binding type identifier "default" is implied.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="defined-bindingtype-identifiers">
