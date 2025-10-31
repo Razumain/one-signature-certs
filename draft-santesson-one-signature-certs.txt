@@ -13,10 +13,10 @@ Expires: 3 May 2026
 
 Abstract
 
-   This document defines a profile for one-time-use certificates that
-   are issued for a single signing operation.  Each certificate is
-   created at the time of signing and bound to the signed content.  The
-   associated signing key is immediately destroyed after use, and the
+   This document defines a profile for certificates that are issued for
+   a single signing operation.  Each certificate is created at the time
+   of signing and bound to the signed content.  The associated signing
+   key is generated and then immediately destroyed after use, and the
    certificate never expires and is never revoked.  This simplifies
    long-term validation by removing the need for revocation or
    expiration handling.
