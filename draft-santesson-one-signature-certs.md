@@ -228,7 +228,7 @@ Identifier: "xades"
 
 For ETSI XML Advanced Electronic Signatures {{XADES}}, the dataTbsHash value is computed over the canonicalized SignedInfo element,
 with any Reference elements whose Type attribute equals "http://uri.etsi.org/01903#SignedProperties" removed prior to hashing.
-This ensures that the SignedProperties element, which may contain references to the signing certificate, does not create a circular dependency. Extraction of the Reference element MUST be done by removing only the characters from the leading <Reference> tag up to and including the ending </Reference> tag, preserving all other bytes of SignedInfo unchanged, including any white space or line feeds.
+This ensures that the SignedProperties element, which may contain references to the signing certificate, does not create a circular dependency. Extraction of the Reference element MUST be done by removing only the characters from the leading &lt;Reference&gt; tag up to and including the ending &lt;/Reference&gt; tag, preserving all other bytes of SignedInfo unchanged, including any white space or line feeds.
 
 Note: This operation is purely textual and does not require XML parsing beyond locating the tag boundaries.
 
