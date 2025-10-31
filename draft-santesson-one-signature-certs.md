@@ -196,6 +196,8 @@ Therefore, the dataTbsHash enables validators and relying parties to confirm tha
 Validators SHOULD verify that the signed document matches the certificate’s binding information.
 This verification is not required for the signature to validate successfully but provides an additional safeguard against misuse or substitution of certificates.
 
+This document defines a set of bindingType identifiers. Additional bindingType identifiers MAY be defined by future specifications.
+
 ### Default Binding
 
 Identifier: "default"
@@ -209,8 +211,6 @@ Examples include:
 - For other formats, the data structure input directly to the signature algorithm.
 
 This bindingType MUST NOT be used when the data to be signed includes either the signer certificate itself or a hash of the signer certificate. This includes JWS and COSE signed documents that can include signer certificates in the protected header. JWS signatures {{RFC7515}} MUST use the "jws" bindingType and COSE signatures {{RFC8152}} MUST use the "cose" binding type.
-
-This document defines a set of bindingType identifiers. Additional bindingType identifiers MAY be defined by future specifications.
 
 ### CAdES Binding
 
