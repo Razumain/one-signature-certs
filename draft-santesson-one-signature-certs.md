@@ -36,6 +36,7 @@ normative:
   RFC5280:
   RFC5652:
   RFC7515:
+  RFC8152:
   RFC8174:
   RFC9608:
   XMLDSIG11:
