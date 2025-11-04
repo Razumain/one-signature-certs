@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-02T00:07:44.606090+00:00",
+  "timestamp": "2025-11-04T00:07:26.653642+00:00",
   "repo": "Razumain/one-signature-certs",
   "labels": [
     {
@@ -453,6 +453,32 @@
       "mergeCommit": {
         "oid": "bf2911cedf5f57e9098f9f07be45de1a6531d0ef"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOQMHwq86xE5vH",
+      "title": "Update draft-santesson-one-signature-certs.md",
+      "url": "https://github.com/Razumain/one-signature-certs/pull/18",
+      "state": "OPEN",
+      "author": "russhousley",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Add Russ as author and make many edits",
+      "createdAt": "2025-11-02T20:04:56Z",
+      "updatedAt": "2025-11-02T20:04:56Z",
+      "baseRepository": "Razumain/one-signature-certs",
+      "baseRefName": "main",
+      "baseRefOid": "bf2911cedf5f57e9098f9f07be45de1a6531d0ef",
+      "headRepository": "russhousley/one-signature-certs",
+      "headRefName": "add-author-russ",
+      "headRefOid": "97dc20e43de8b6dc2f14575b577791502c4ccfda",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
