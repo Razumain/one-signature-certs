@@ -40,7 +40,7 @@ author:
 
 normative:
   RFC2119:
-  RFC3647
+  RFC3647:
   RFC5035:
   RFC5280:
   RFC5652:
