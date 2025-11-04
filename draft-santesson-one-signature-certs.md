@@ -29,9 +29,18 @@ author:
     code: "223 70"
     country: SE
     email: sts@aaa-sec.com
+  -
+    name: Russ Housley
+    ins: R. Housley
+    org: Vigil Security, LLC
+    abbrev: Vigil Security
+    city: Herndon, VA
+    country: US
+    email: housley@vigilsec.com
 
 normative:
   RFC2119:
+  RFC3647
   RFC5035:
   RFC5280:
   RFC5652:
@@ -98,48 +107,46 @@ normative:
 informative:
   RFC9321:
 
-...
-
 --- abstract
 
-This document defines a profile for certificates that are issued for a single signing operation. Each certificate is created at the time of signing and bound to the signed content. The associated signing key is generated and then immediately destroyed after use, and the certificate never expires and is never revoked. This simplifies long-term validation by removing the need for revocation or expiration handling.
+This document defines a profile for certificates that are issued for validation of the digital signature produced by a single signing operation. Each certificate is created at the time of signing and bound to the signed content. The associated signing key is generated, used to produce a single digital signature, and then immediately destroyed. The certificate never expires and is never revoked, which simplifies long-term validation.
 
 --- middle
 
 # Introduction
 
-The landscape of server-based signing services has changed over the last decades. During the past years one type of signature service has gained a lot of traction where the signing key and signing certificate are created for each instance of signing, rather than re-using a static key and certificate over time.
+The landscape of server-based signing services has changed over the decades. Recently, one type of signature service has gained favor, where the signing private key and the signing certificate are created for each digital signature, rather than re-using a static key and certificate over an extended time period.
 
 Some reasons why this type of signature services has been successful are:
 
-- The certificate will always have a predictable validity time from the time of signing
-- The time of signing is guaranteed by the certificate issue date
-- The identity information in the certificate can be adapted to the signing context for each instance of signing
-- Revocation of signing certificates is practically non-existent despite many years of operation and millions of signatures.
-- Service providers are not bound to using the signature service where the signer's key and certificate is located, but can choose one signature service it integrates with that holds no pre-stored user keys and certificates.
+- The certificate will always have a predictable validity time from the time of signing;
+- The time of signing is guaranteed by the certificate issue date;
+- The identity information in the certificate can be adapted to the signing context;
+- Revocation of signing certificates is practically non-existent despite many years of operation and millions of signatures; and
+- The signature service holds no pre-stored user keys or certificates.
 
-While this type of signature service solves a lot of problems, it still suffers from the complexity caused by expiring signing certificates. One solution to this problem is the Signature Validation Token (SVT) {{RFC9321}} where future validation can rely on a previous successful validation rather than making a new re-validation based on aging data.
+While this type of signature service solves many problems, it still suffers from the complexity caused by expiring signing certificates. One solution to this problem is the Signature Validation Token (SVT) {{RFC9321}}, where future validation can rely on a previous successful validation rather than validation based on aging data.
 
-This document takes this one step further and allows future re-validation at any time in the future as long as trust in the CA certificate can be established.
+This document takes this one step further and allows validation at any time in the future as long as trust in the CA certificate can be established.
 
 ## Basic features
 
 One signature certificates have the following common characteristics:
 
-- They never expire
-- They are never revoked
-- They are bound to a specific document content
-- They assert that the corresponding private key was destroyed after signing
+- They never expire;
+- They are never revoked;
+- They are bound to a specific document content; and
+- They assert that the corresponding private key was destroyed immediately after signing.
 
 ### Revocation
 
 Traditional certificates that are re-used over time have many legitimate reasons for revocation, such as if the private key is lost or compromised. This can lead to large volumes of revocation data.
 
-The fact that the same key is used many times exposes the key for the risk of unauthorized usage or theft. When many objects are signed with the same key, the risk of exposure and the number of affected signed documents upon revocation increases, unless properly timestamped and properly verified.
+The fact that the same key is used many times exposes the key for the risks of loss, unauthorized usage, or theft. When many objects are signed with the same private key, the risk of exposure and the number of affected signed documents upon revocation increases, unless properly timestamped and properly verified.
 
-When a signing key is used only once, that risk of exposure is drastically reduced, and it has been shown that most usages of dedicated keys and certificates no longer require revocation.
+When a signing key is used only once, that risk of exposure is greatly reduced, and it has been shown that most usages of dedicated private keys and certificates no longer require revocation.
 
-No CA can guarantee that a certificate is correctly issued. What the CA does is to attest that a certain procedure was followed when the certificate was issued, and the certificate itself is an attestation that this process was followed successfully when the signature was created. Certificates issued according to this profile therefore only attest to the validity at the time of issuance and signing, rather than a retroactive state at the time of validation. This profile is intended for those applications where this declaration of validity is relevant and useful.
+The CA can readily attest that a certain procedure was followed when the certificate was issued. As a matter of policy, the certificate itself is an attestation that the CP and CPS {{RFC3647}} were followed successfully when the signature was created. Certificates issued according to this profile therefore only attest to the validity at the time of issuance and signing, rather than a retroactive state at the time of validation. This profile is intended for those applications where this declaration of validity is relevant and useful.
 
 Applications that require traditional revocation checking that provides the state at the time of validation MUST NOT use this profile.
 
@@ -172,15 +179,15 @@ The signedDocumentBinding extension binds a certificate to a specific signed con
 
     SignedDocumentBinding ::= SEQUENCE {
     dataTbsHash     OCTET STRING,
-    hashAlg         OBJECT IDENTIFIER,
+    hashAlg         DigestAlgorithmIdentifier,
     bindingType     UTF8String OPTIONAL }
 
 
-The dataTbsHash field SHALL contain a hash of the data to be signed.
+The dataTbsHash field MUST contain a hash of the data to be signed.
 
-The hashAlg field SHALL contain the OID of the hash algorithm used to generate the dataTbsHash value.
+The hashAlg field MUST contain the AlgorithmIdentifier of the hash algorithm used to generate the dataTbsHash value.
 
-The bindingType field MAY contain an identifier that specifies how the data to be signed is derived from the document to be signed. When this field is omitted, the binding type identifier "default" is implied.
+The bindingType field MAY contain an identifier that specifies how the data to be signed is derived from the digital object to be signed.
 
 ## Defined bindingType identifiers
 
@@ -200,9 +207,7 @@ This document defines a set of bindingType identifiers. Additional bindingType i
 
 ### Default Binding
 
-Identifier: "default"
-
-The default binding applies when the bindingType field is absent or set to "default".
+When the bindingType is absent, the default binding applies.
 In this case, the dataTbsHash value is the hash of the exact data that is hashed and signed by the signature format in use.
 
 Examples include:
@@ -249,7 +254,6 @@ The protected header and any unprotected header parameters MUST NOT be included 
 
 This exclusion avoids circular dependencies where certificate data may appear in the protected header.
 
-
 # ASN.1 Module
 
     <CODE BEGINS>
@@ -266,7 +270,12 @@ This exclusion avoids circular dependencies where certificate data may appear in
          FROM PKIX-CommonTypes-2009  -- RFC 5912
            { iso(1) identified-organization(3) dod(6) internet(1)
              security(5) mechanisms(5) pkix(7) id-mod(0)
-             id-mod-pkixCommon-02(57) } ;
+             id-mod-pkixCommon-02(57) }
+
+         DigestAlgorithmIdentifier
+         FROM CryptographicMessageSyntax-2010 -- RFC 6268
+           { iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1)
+             pkcs-9(9) smime(16) modules(0) id-mod-cms-2009(58) } ;
 
        -- signedDocumentBinding Certificate Extension
 
@@ -276,7 +285,7 @@ This exclusion avoids circular dependencies where certificate data may appear in
 
        SignedDocumentBinding ::= SEQUENCE {
          dataTbsHash     OCTET STRING,
-         hashAlg         OBJECT IDENTIFIER,
+         hashAlg         DigestAlgorithmIdentifier,
          bindingType     UTF8String OPTIONAL }
 
        -- signedDocumentBinding Certificate Extension OID
