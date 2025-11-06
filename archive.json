@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-04T00:07:26.653642+00:00",
+  "timestamp": "2025-11-06T00:07:35.228801+00:00",
   "repo": "Razumain/one-signature-certs",
   "labels": [
     {
@@ -461,24 +461,66 @@
       "id": "PR_kwDOQMHwq86xE5vH",
       "title": "Update draft-santesson-one-signature-certs.md",
       "url": "https://github.com/Razumain/one-signature-certs/pull/18",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "russhousley",
-      "authorAssociation": "NONE",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Add Russ as author and make many edits",
       "createdAt": "2025-11-02T20:04:56Z",
-      "updatedAt": "2025-11-02T20:04:56Z",
+      "updatedAt": "2025-11-04T11:35:29Z",
       "baseRepository": "Razumain/one-signature-certs",
       "baseRefName": "main",
       "baseRefOid": "bf2911cedf5f57e9098f9f07be45de1a6531d0ef",
       "headRepository": "russhousley/one-signature-certs",
       "headRefName": "add-author-russ",
       "headRefOid": "97dc20e43de8b6dc2f14575b577791502c4ccfda",
-      "closedAt": null,
+      "closedAt": "2025-11-04T11:35:29Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQMHwq87LmUMd",
+          "commit": {
+            "abbreviatedOid": "97dc20e"
+          },
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Great improvements",
+          "createdAt": "2025-11-04T11:12:58Z",
+          "updatedAt": "2025-11-04T11:12:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOQMHwq86xZhF7",
+      "title": "Amendments from Russ",
+      "url": "https://github.com/Razumain/one-signature-certs/pull/19",
+      "state": "MERGED",
+      "author": "Razumain",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "With my accepted changes",
+      "createdAt": "2025-11-04T11:32:58Z",
+      "updatedAt": "2025-11-04T11:35:18Z",
+      "baseRepository": "Razumain/one-signature-certs",
+      "baseRefName": "main",
+      "baseRefOid": "bf2911cedf5f57e9098f9f07be45de1a6531d0ef",
+      "headRepository": "Razumain/one-signature-certs",
+      "headRefName": "russ-changes",
+      "headRefOid": "fd73896d347dd37cc99c8082b2a9dd2f94235584",
+      "closedAt": "2025-11-04T11:35:11Z",
+      "mergedAt": "2025-11-04T11:35:11Z",
+      "mergedBy": "Razumain",
+      "mergeCommit": {
+        "oid": "15c76e4efc3233e1a748366aab90108ebe370fe3"
+      },
       "comments": [],
       "reviews": []
     }
