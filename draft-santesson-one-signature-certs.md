@@ -6,7 +6,7 @@ category: std
 
 docname: draft-santesson-one-signature-certs-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
-date: 2025-10-30
+date: 2025-11-11
 consensus: true
 v: 3
 area: Security
