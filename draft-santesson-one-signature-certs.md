@@ -4,7 +4,7 @@ abbrev: "OSC"
 ipr: "trust200902"
 category: std
 
-docname: draft-santesson-one-signature-certs-latest
+docname: draft-santesson-one-signature-certs-00
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 date: 2025-10-30
 consensus: true
