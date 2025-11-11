@@ -1,3 +1,5 @@
+export UPLOAD_EMAIL ?= stefan@aaa-sec.com
+
 LIBDIR := lib
 include $(LIBDIR)/main.mk
 
