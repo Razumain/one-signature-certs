@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-06T00:07:35.228801+00:00",
+  "timestamp": "2025-11-13T00:07:39.702555+00:00",
   "repo": "Razumain/one-signature-certs",
   "labels": [
     {
@@ -520,6 +520,34 @@
       "mergedBy": "Razumain",
       "mergeCommit": {
         "oid": "15c76e4efc3233e1a748366aab90108ebe370fe3"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOQMHwq86yy3TL",
+      "title": "Publish 00",
+      "url": "https://github.com/Razumain/one-signature-certs/pull/20",
+      "state": "MERGED",
+      "author": "Razumain",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-11-11T16:25:56Z",
+      "updatedAt": "2025-11-11T16:37:13Z",
+      "baseRepository": "Razumain/one-signature-certs",
+      "baseRefName": "main",
+      "baseRefOid": "15c76e4efc3233e1a748366aab90108ebe370fe3",
+      "headRepository": "Razumain/one-signature-certs",
+      "headRefName": "publish-00",
+      "headRefOid": "ff5f61b29dc4339c97982713e02a90a79bcc96d3",
+      "closedAt": "2025-11-11T16:37:13Z",
+      "mergedAt": "2025-11-11T16:37:13Z",
+      "mergedBy": "Razumain",
+      "mergeCommit": {
+        "oid": "9dbc856d8b5438788cd4d583fd33d45c61ea244a"
       },
       "comments": [],
       "reviews": []
