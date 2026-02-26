@@ -189,7 +189,7 @@ The hashAlg field MUST contain the AlgorithmIdentifier of the hash algorithm use
 
 The bindingType field MAY contain an identifier that specifies how the data to be signed is derived from the digital object to be signed.
 
-Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured SHOULD be outlined in the certificate policy of the issued certificate.
+Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured SHOULD be outlined in the certificate policy {{RFC3647}} of the issued certificate.
 
 ## Defined bindingType identifiers
 
@@ -298,15 +298,17 @@ This exclusion avoids circular dependencies where certificate data may appear in
 
 Certificates conforming to this profile include the id-ce-noRevAvail extension and therefore do not provide any revocation mechanism. Such certificates attest only to the state of trust and correctness of procedures at the time of issuance.
 
-Security considerations in {{RFC9608}} applies also to this document.
+The Security considerations in {{RFC9608}} also applies to this document.
 
 ## Signed Document Binding
 
-The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. However, verification of this binding is not mandatory for successful cryptographic validation of the signature.
+The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. Verification of this binding is not required for successful cryptographic validation of the signature. A signature can therefore validate correctly even if the binding is not checked.
 
-A relying party MAY choose not to verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. This is a trust decision made by the relying party.
+However, a relying party SHOULD verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. Performing this check ensures that the certificate is used only with the content for which it was issued and enforces the intended scope of the certificate.
 
-The security contract of this profile states that the key is generated for, and used in, exactly one signing operation, and then destroyed. This property holds regardless of whether the relying party verifies the binding. However, the signedDocumentBinding extension provides an additional safeguard against certificate substitution and unintended reuse when properly verified.
+The security model of this profile states that the associated private key is generated for, and used in, exactly one signing operation and is then destroyed. This property holds independently of whether the binding is verified by the relying party. Nevertheless, failure to verify the binding weakens the protections provided by this profile and increases the risk of certificate substitution or unintended certificate reuse.
+
+When verified, the signedDocumentBinding extension provides an additional safeguard against the use of the certificate for any signature other than the one for which it was issued.
 
 # IANA Considerations
 
