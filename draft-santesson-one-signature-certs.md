@@ -6,7 +6,7 @@ category: std
 
 docname: draft-santesson-one-signature-certs-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
-date: 2025-11-11
+date: 2026-02-26
 consensus: true
 v: 3
 area: Security
@@ -297,12 +297,69 @@ This exclusion avoids circular dependencies where certificate data may appear in
 
 # Security Considerations
 
-TODO Security Considerations. Including text on reliance on certificates without revocation.
+## Certificates Without Revocation
+
+Certificates conforming to this profile include the id-ce-noRevAvail extension and therefore do not provide any revocation mechanism. Such certificates attest only to the state of trust and correctness of procedures at the time of issuance.
+
+Security considerations in {{RFC9608}} applies also to this document.
+
+## Signed Document Binding
+
+The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. However, verification of this binding is not mandatory for successful cryptographic validation of the signature.
+
+A relying party MAY choose not to verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. This is a trust decision made by the relying party.
+
+The security contract of this profile states that the key is generated for, and used in, exactly one signing operation, and then destroyed. This property holds regardless of whether the relying party verifies the binding. However, the signedDocumentBinding extension provides an additional safeguard against certificate substitution and unintended reuse when properly verified.
 
 # IANA Considerations
 
-TBD IANA registry for bindingType identifiers
+## Registry for signedDocumentBinding bindingType Identifiers
 
+IANA is requested to create a new registry entitled: “Signed Document Binding Type Identifiers”
+
+This registry shall contain identifiers used in the bindingType field of the signedDocumentBinding certificate extension defined in this document.
+
+### Registry Contents
+
+Each registry entry shall contain the following fields:
+
+- Identifier: A UTF-8 string identifying the binding type.
+- Description: A brief description of how the dataTbsHash value is computed.
+- Reference: A reference to the document that defines the binding type.
+
+### Registration Policy
+
+The registration policy for this registry is Specification Required as defined in {{RFC8174}}.
+
+The designated expert(s) SHALL ensure that:
+
+- The binding type definition clearly specifies a deterministic and unambiguous procedure for computing the dataTbsHash value.
+- The specification explains how circular dependencies with certificate inclusion are avoided, where applicable.
+- The identifier is unique within the registry.
+
+### Initial Registry Contents
+
+IANA is requested to populate the registry with the following initial values:
+
+- Identifier: (absent)
+- Description: Default binding as defined in this document
+- Reference: This document
+
+- Identifier: cades
+- Description: CMS/CAdES binding excluding SigningCertificate attributes
+- Reference: This document
+
+- Identifier: xades
+- Description: XAdES binding excluding SignedProperties reference
+- Reference: This document
+
+- Identifier: jws
+- Description: JWS payload-only binding
+- Reference: This document
+
+- Identifier: cose
+- Description: COSE payload-only binding
+- Reference: This document
 
 --- back
 
