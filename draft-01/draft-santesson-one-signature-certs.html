@@ -1350,7 +1350,7 @@ bindingType     UTF8String OPTIONAL }
 <p id="section-3.1-3">The dataTbsHash field <span class="bcp14">MUST</span> contain a hash of the data to be signed.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.1-4">The hashAlg field <span class="bcp14">MUST</span> contain the AlgorithmIdentifier of the hash algorithm used to generate the dataTbsHash value.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">The bindingType field <span class="bcp14">MAY</span> contain an identifier that specifies how the data to be signed is derived from the digital object to be signed.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured <span class="bcp14">SHOULD</span> be outlined in the certificate policy of the issued certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured <span class="bcp14">SHOULD</span> be outlined in the certificate policy <span>[<a href="#RFC3647" class="cite xref">RFC3647</a>]</span> of the issued certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="defined-bindingtype-identifiers">
@@ -1486,7 +1486,7 @@ The protected header and any unprotected header parameters <span class="bcp14">M
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-certificates-without-revoca" class="section-name selfRef">Certificates Without Revocation</a>
         </h3>
 <p id="section-5.1-1">Certificates conforming to this profile include the id-ce-noRevAvail extension and therefore do not provide any revocation mechanism. Such certificates attest only to the state of trust and correctness of procedures at the time of issuance.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">Security considerations in <span>[<a href="#RFC9608" class="cite xref">RFC9608</a>]</span> applies also to this document.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">The Security considerations in <span>[<a href="#RFC9608" class="cite xref">RFC9608</a>]</span> also applies to this document.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="signed-document-binding">
@@ -1494,9 +1494,10 @@ The protected header and any unprotected header parameters <span class="bcp14">M
         <h3 id="name-signed-document-binding">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-signed-document-binding" class="section-name selfRef">Signed Document Binding</a>
         </h3>
-<p id="section-5.2-1">The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. However, verification of this binding is not mandatory for successful cryptographic validation of the signature.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">A relying party <span class="bcp14">MAY</span> choose not to verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. This is a trust decision made by the relying party.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">The security contract of this profile states that the key is generated for, and used in, exactly one signing operation, and then destroyed. This property holds regardless of whether the relying party verifies the binding. However, the signedDocumentBinding extension provides an additional safeguard against certificate substitution and unintended reuse when properly verified.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. Verification of this binding is not required for successful cryptographic validation of the signature. A signature can therefore validate correctly even if the binding is not checked.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">However, a relying party <span class="bcp14">SHOULD</span> verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. Performing this check ensures that the certificate is used only with the content for which it was issued and enforces the intended scope of the certificate.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">The security model of this profile states that the associated private key is generated for, and used in, exactly one signing operation and is then destroyed. This property holds independently of whether the binding is verified by the relying party. Nevertheless, failure to verify the binding weakens the protections provided by this profile and increases the risk of certificate substitution or unintended certificate reuse.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">When verified, the signedDocumentBinding extension provides an additional safeguard against the use of the certificate for any signature other than the one for which it was issued.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
