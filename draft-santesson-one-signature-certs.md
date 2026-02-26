@@ -189,18 +189,15 @@ The hashAlg field MUST contain the AlgorithmIdentifier of the hash algorithm use
 
 The bindingType field MAY contain an identifier that specifies how the data to be signed is derived from the digital object to be signed.
 
+Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured SHOULD be outlined in the certificate policy of the issued certificate.
+
 ## Defined bindingType identifiers
 
 The bindingType field defines how the data to be signed (dataTbsHash) is derived from the signed document.
 This field identifies a deterministic procedure for selecting the portion of the signed content that is included in the hash computation.
 When the field is omitted, the rules for the default binding type apply.
 
-The purpose of the dataTbsHash value is to bind the certificate to the document being signed, not to protect the document’s integrity.
-The integrity of the signed content is provided by the signature itself.
-If any byte of the signed document is modified, the calculated hash will no longer match the certificate.
-Therefore, the dataTbsHash enables validators and relying parties to confirm that the certificate was issued for the exact content that was signed.
-
-Validators SHOULD verify that the signed document matches the certificate’s binding information.
+The purpose of the dataTbsHash value is to bind the certificate to the document being signed in order to prevent re-use of the signing key for multiple signed documents. This enforces the contract that the signing key is used only once for creation of one signature only. Validators SHOULD verify that the signed document matches the certificate’s binding information.
 This verification is not required for the signature to validate successfully but provides an additional safeguard against misuse or substitution of certificates.
 
 This document defines a set of bindingType identifiers. Additional bindingType identifiers MAY be defined by future specifications.
