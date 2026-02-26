@@ -20,14 +20,14 @@
     Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
-    intervaltree 3.1.0
+    intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 5.3.1
-    platformdirs 4.5.0
+    lxml 6.0.2
+    platformdirs 4.5.1
     pycountry 24.6.1
-    PyYAML 6.0.2
+    PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.2.14
+    wcwidth 0.3.0
 -->
 <link href="draft-santesson-one-signature-certs.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -168,7 +168,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -176,7 +176,8 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -568,6 +569,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -638,7 +640,7 @@ a.pilcrow {
   }
 }
 @media not print {
-  :hover > a.pilcrow {
+  :hover > a.pilcrow, a.pilcrow:focus {
     opacity: 1;
   }
   a.pilcrow[href]:hover {
@@ -1046,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OSC</td>
-<td class="right">November 2025</td>
+<td class="right">February 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Santesson &amp; Housley</td>
-<td class="center">Expires 15 May 2026</td>
+<td class="center">Expires 30 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-santesson-one-signature-certs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-11-11" class="published">11 November 2025</time>
+<time datetime="2026-02-26" class="published">26 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-05-15">15 May 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-30">30 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1116,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 May 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1125,7 +1127,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2025 IETF Trust and the persons identified as the
+            Copyright (c) 2026 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1194,9 +1196,33 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-certificates-without-revoca" class="internal xref">Certificates Without Revocation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-signed-document-binding" class="internal xref">Signed Document Binding</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-registry-for-signeddocument" class="internal xref">Registry for signedDocumentBinding bindingType Identifiers</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-registry-contents" class="internal xref">Registry Contents</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-registration-policy" class="internal xref">Registration Policy</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
+                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-initial-registry-contents" class="internal xref">Initial Registry Contents</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-references" class="internal xref">References</a></p>
@@ -1324,6 +1350,7 @@ bindingType     UTF8String OPTIONAL }
 <p id="section-3.1-3">The dataTbsHash field <span class="bcp14">MUST</span> contain a hash of the data to be signed.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.1-4">The hashAlg field <span class="bcp14">MUST</span> contain the AlgorithmIdentifier of the hash algorithm used to generate the dataTbsHash value.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">The bindingType field <span class="bcp14">MAY</span> contain an identifier that specifies how the data to be signed is derived from the digital object to be signed.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured <span class="bcp14">SHOULD</span> be outlined in the certificate policy <span>[<a href="#RFC3647" class="cite xref">RFC3647</a>]</span> of the issued certificate.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="defined-bindingtype-identifiers">
@@ -1334,13 +1361,9 @@ bindingType     UTF8String OPTIONAL }
 <p id="section-3.2-1">The bindingType field defines how the data to be signed (dataTbsHash) is derived from the signed document.
 This field identifies a deterministic procedure for selecting the portion of the signed content that is included in the hash computation.
 When the field is omitted, the rules for the default binding type apply.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">The purpose of the dataTbsHash value is to bind the certificate to the document being signed, not to protect the document’s integrity.
-The integrity of the signed content is provided by the signature itself.
-If any byte of the signed document is modified, the calculated hash will no longer match the certificate.
-Therefore, the dataTbsHash enables validators and relying parties to confirm that the certificate was issued for the exact content that was signed.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">Validators <span class="bcp14">SHOULD</span> verify that the signed document matches the certificate’s binding information.
-This verification is not required for the signature to validate successfully but provides an additional safeguard against misuse or substitution of certificates.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2-4">This document defines a set of bindingType identifiers. Additional bindingType identifiers <span class="bcp14">MAY</span> be defined by future specifications.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">The purpose of the dataTbsHash value is to bind the certificate to the document being signed in order to prevent re-use of the signing key for multiple signed documents. This enforces the contract that the signing key is used only once for creation of one signature only. Validators <span class="bcp14">SHOULD</span> verify that the signed document matches the certificate’s binding information.
+This verification is not required for the signature to validate successfully but provides an additional safeguard against misuse or substitution of certificates.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">This document defines a set of bindingType identifiers. Additional bindingType identifiers <span class="bcp14">MAY</span> be defined by future specifications.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <div id="default-binding">
 <section id="section-3.2.1">
           <h4 id="name-default-binding">
@@ -1457,7 +1480,26 @@ The protected header and any unprotected header parameters <span class="bcp14">M
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">TODO Security Considerations. Including text on reliance on certificates without revocation.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="certificates-without-revocation">
+<section id="section-5.1">
+        <h3 id="name-certificates-without-revoca">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-certificates-without-revoca" class="section-name selfRef">Certificates Without Revocation</a>
+        </h3>
+<p id="section-5.1-1">Certificates conforming to this profile include the id-ce-noRevAvail extension and therefore do not provide any revocation mechanism. Such certificates attest only to the state of trust and correctness of procedures at the time of issuance.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">The Security considerations in <span>[<a href="#RFC9608" class="cite xref">RFC9608</a>]</span> also applies to this document.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="signed-document-binding">
+<section id="section-5.2">
+        <h3 id="name-signed-document-binding">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-signed-document-binding" class="section-name selfRef">Signed Document Binding</a>
+        </h3>
+<p id="section-5.2-1">The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. Verification of this binding is not required for successful cryptographic validation of the signature. A signature can therefore validate correctly even if the binding is not checked.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">However, a relying party <span class="bcp14">SHOULD</span> verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. Performing this check ensures that the certificate is used only with the content for which it was issued and enforces the intended scope of the certificate.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">The security model of this profile states that the associated private key is generated for, and used in, exactly one signing operation and is then destroyed. This property holds independently of whether the binding is verified by the relying party. Nevertheless, failure to verify the binding weakens the protections provided by this profile and increases the risk of certificate substitution or unintended certificate reuse.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">When verified, the signedDocumentBinding extension provides an additional safeguard against the use of the certificate for any signature other than the one for which it was issued.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1465,7 +1507,109 @@ The protected header and any unprotected header parameters <span class="bcp14">M
       <h2 id="name-iana-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">TBD IANA registry for bindingType identifiers<a href="#section-6-1" class="pilcrow">¶</a></p>
+<div id="registry-for-signeddocumentbinding-bindingtype-identifiers">
+<section id="section-6.1">
+        <h3 id="name-registry-for-signeddocument">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-registry-for-signeddocument" class="section-name selfRef">Registry for signedDocumentBinding bindingType Identifiers</a>
+        </h3>
+<p id="section-6.1-1">IANA is requested to create a new registry entitled: “Signed Document Binding Type Identifiers”<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">This registry shall contain identifiers used in the bindingType field of the signedDocumentBinding certificate extension defined in this document.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<div id="registry-contents">
+<section id="section-6.1.1">
+          <h4 id="name-registry-contents">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-registry-contents" class="section-name selfRef">Registry Contents</a>
+          </h4>
+<p id="section-6.1.1-1">Each registry entry shall contain the following fields:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.1-2.1">
+              <p id="section-6.1.1-2.1.1">Identifier: A UTF-8 string identifying the binding type.<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.1-2.2">
+              <p id="section-6.1.1-2.2.1">Description: A brief description of how the dataTbsHash value is computed.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.1-2.3">
+              <p id="section-6.1.1-2.3.1">Reference: A reference to the document that defines the binding type.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="registration-policy">
+<section id="section-6.1.2">
+          <h4 id="name-registration-policy">
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-registration-policy" class="section-name selfRef">Registration Policy</a>
+          </h4>
+<p id="section-6.1.2-1">The registration policy for this registry is Specification Required as defined in <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span>.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.2-2">The designated expert(s) <span class="bcp14">SHALL</span> ensure that:<a href="#section-6.1.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.2-3.1">
+              <p id="section-6.1.2-3.1.1">The binding type definition clearly specifies a deterministic and unambiguous procedure for computing the dataTbsHash value.<a href="#section-6.1.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.2-3.2">
+              <p id="section-6.1.2-3.2.1">The specification explains how circular dependencies with certificate inclusion are avoided, where applicable.<a href="#section-6.1.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.2-3.3">
+              <p id="section-6.1.2-3.3.1">The identifier is unique within the registry.<a href="#section-6.1.2-3.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="initial-registry-contents">
+<section id="section-6.1.3">
+          <h4 id="name-initial-registry-contents">
+<a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-initial-registry-contents" class="section-name selfRef">Initial Registry Contents</a>
+          </h4>
+<p id="section-6.1.3-1">IANA is requested to populate the registry with the following initial values:<a href="#section-6.1.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.1.3-2.1">
+              <p id="section-6.1.3-2.1.1">Identifier: (absent)<a href="#section-6.1.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.2">
+              <p id="section-6.1.3-2.2.1">Description: Default binding as defined in this document<a href="#section-6.1.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.3">
+              <p id="section-6.1.3-2.3.1">Reference: This document<a href="#section-6.1.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.4">
+              <p id="section-6.1.3-2.4.1">Identifier: cades<a href="#section-6.1.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.5">
+              <p id="section-6.1.3-2.5.1">Description: CMS/CAdES binding excluding SigningCertificate attributes<a href="#section-6.1.3-2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.6">
+              <p id="section-6.1.3-2.6.1">Reference: This document<a href="#section-6.1.3-2.6.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.7">
+              <p id="section-6.1.3-2.7.1">Identifier: xades<a href="#section-6.1.3-2.7.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.8">
+              <p id="section-6.1.3-2.8.1">Description: XAdES binding excluding SignedProperties reference<a href="#section-6.1.3-2.8.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.9">
+              <p id="section-6.1.3-2.9.1">Reference: This document<a href="#section-6.1.3-2.9.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.10">
+              <p id="section-6.1.3-2.10.1">Identifier: jws<a href="#section-6.1.3-2.10.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.11">
+              <p id="section-6.1.3-2.11.1">Description: JWS payload-only binding<a href="#section-6.1.3-2.11.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.12">
+              <p id="section-6.1.3-2.12.1">Reference: This document<a href="#section-6.1.3-2.12.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.13">
+              <p id="section-6.1.3-2.13.1">Identifier: cose<a href="#section-6.1.3-2.13.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.14">
+              <p id="section-6.1.3-2.14.1">Description: COSE payload-only binding<a href="#section-6.1.3-2.14.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.3-2.15">
+              <p id="section-6.1.3-2.15.1">Reference: This document<a href="#section-6.1.3-2.15.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="sec-combined-references">
