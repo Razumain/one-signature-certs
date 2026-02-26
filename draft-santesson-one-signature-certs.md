@@ -6,7 +6,7 @@ category: std
 
 docname: draft-santesson-one-signature-certs-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
-date: 2025-11-11
+date: 2026-02-26
 consensus: true
 v: 3
 area: Security
@@ -189,18 +189,15 @@ The hashAlg field MUST contain the AlgorithmIdentifier of the hash algorithm use
 
 The bindingType field MAY contain an identifier that specifies how the data to be signed is derived from the digital object to be signed.
 
+Adding this extension to a certificate is a statement by the CA that the signing key is generated exclusively for the purpose of signing the document bound by this extension, and that the signing key is destroyed after signing. The details for this procedure and how the destruction of the signing key is assured SHOULD be outlined in the certificate policy {{RFC3647}} of the issued certificate.
+
 ## Defined bindingType identifiers
 
 The bindingType field defines how the data to be signed (dataTbsHash) is derived from the signed document.
 This field identifies a deterministic procedure for selecting the portion of the signed content that is included in the hash computation.
 When the field is omitted, the rules for the default binding type apply.
 
-The purpose of the dataTbsHash value is to bind the certificate to the document being signed, not to protect the document’s integrity.
-The integrity of the signed content is provided by the signature itself.
-If any byte of the signed document is modified, the calculated hash will no longer match the certificate.
-Therefore, the dataTbsHash enables validators and relying parties to confirm that the certificate was issued for the exact content that was signed.
-
-Validators SHOULD verify that the signed document matches the certificate’s binding information.
+The purpose of the dataTbsHash value is to bind the certificate to the document being signed in order to prevent re-use of the signing key for multiple signed documents. This enforces the contract that the signing key is used only once for creation of one signature only. Validators SHOULD verify that the signed document matches the certificate’s binding information.
 This verification is not required for the signature to validate successfully but provides an additional safeguard against misuse or substitution of certificates.
 
 This document defines a set of bindingType identifiers. Additional bindingType identifiers MAY be defined by future specifications.
@@ -297,12 +294,71 @@ This exclusion avoids circular dependencies where certificate data may appear in
 
 # Security Considerations
 
-TODO Security Considerations. Including text on reliance on certificates without revocation.
+## Certificates Without Revocation
+
+Certificates conforming to this profile include the id-ce-noRevAvail extension and therefore do not provide any revocation mechanism. Such certificates attest only to the state of trust and correctness of procedures at the time of issuance.
+
+The Security considerations in {{RFC9608}} also applies to this document.
+
+## Signed Document Binding
+
+The signedDocumentBinding extension binds the certificate to specific signed content by including a hash of the data to be signed. Verification of this binding is not required for successful cryptographic validation of the signature. A signature can therefore validate correctly even if the binding is not checked.
+
+However, a relying party SHOULD verify that the signed content matches the dataTbsHash value in the signedDocumentBinding extension. Performing this check ensures that the certificate is used only with the content for which it was issued and enforces the intended scope of the certificate.
+
+The security model of this profile states that the associated private key is generated for, and used in, exactly one signing operation and is then destroyed. This property holds independently of whether the binding is verified by the relying party. Nevertheless, failure to verify the binding weakens the protections provided by this profile and increases the risk of certificate substitution or unintended certificate reuse.
+
+When verified, the signedDocumentBinding extension provides an additional safeguard against the use of the certificate for any signature other than the one for which it was issued.
 
 # IANA Considerations
 
-TBD IANA registry for bindingType identifiers
+## Registry for signedDocumentBinding bindingType Identifiers
 
+IANA is requested to create a new registry entitled: “Signed Document Binding Type Identifiers”
+
+This registry shall contain identifiers used in the bindingType field of the signedDocumentBinding certificate extension defined in this document.
+
+### Registry Contents
+
+Each registry entry shall contain the following fields:
+
+- Identifier: A UTF-8 string identifying the binding type.
+- Description: A brief description of how the dataTbsHash value is computed.
+- Reference: A reference to the document that defines the binding type.
+
+### Registration Policy
+
+The registration policy for this registry is Specification Required as defined in {{RFC8174}}.
+
+The designated expert(s) SHALL ensure that:
+
+- The binding type definition clearly specifies a deterministic and unambiguous procedure for computing the dataTbsHash value.
+- The specification explains how circular dependencies with certificate inclusion are avoided, where applicable.
+- The identifier is unique within the registry.
+
+### Initial Registry Contents
+
+IANA is requested to populate the registry with the following initial values:
+
+- Identifier: (absent)
+- Description: Default binding as defined in this document
+- Reference: This document
+
+- Identifier: cades
+- Description: CMS/CAdES binding excluding SigningCertificate attributes
+- Reference: This document
+
+- Identifier: xades
+- Description: XAdES binding excluding SignedProperties reference
+- Reference: This document
+
+- Identifier: jws
+- Description: JWS payload-only binding
+- Reference: This document
+
+- Identifier: cose
+- Description: COSE payload-only binding
+- Reference: This document
 
 --- back
 
