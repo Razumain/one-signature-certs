@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-13T00:07:39.702555+00:00",
+  "timestamp": "2026-03-01T00:10:47.054205+00:00",
   "repo": "Razumain/one-signature-certs",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOQMHwq87VB5ev",
       "title": "Clarify language regarding document binding not covering all signed data",
       "url": "https://github.com/Razumain/one-signature-certs/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Razumain",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-10-31T09:15:07Z",
-      "updatedAt": "2025-10-31T09:15:07Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-26T23:29:38Z",
+      "closedAt": "2026-02-26T23:29:38Z",
       "comments": []
     },
     {
@@ -71,15 +71,15 @@
       "id": "I_kwDOQMHwq87VB6C0",
       "title": "Write Security Considerations",
       "url": "https://github.com/Razumain/one-signature-certs/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Razumain",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-10-31T09:15:37Z",
-      "updatedAt": "2025-10-31T09:15:37Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-26T23:29:39Z",
+      "closedAt": "2026-02-26T23:29:39Z",
       "comments": []
     },
     {
@@ -87,15 +87,15 @@
       "id": "I_kwDOQMHwq87VB6cm",
       "title": "Write IANA Considerations",
       "url": "https://github.com/Razumain/one-signature-certs/issues/14",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Razumain",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-10-31T09:15:59Z",
-      "updatedAt": "2025-10-31T09:15:59Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-26T23:29:39Z",
+      "closedAt": "2026-02-26T23:29:39Z",
       "comments": []
     },
     {
@@ -135,14 +135,46 @@
       "id": "I_kwDOQMHwq87VCAvY",
       "title": "Clarify declaration of private key destruction",
       "url": "https://github.com/Razumain/one-signature-certs/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Razumain",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "This should be added as a claim made by the CA by adding the document binding extension.\n\nThis may need a clarification of the relationship between the CA and the signing service, where the signing service acts as an LRA, handling user authentication as well as private key deletion. The CA must trust the signing service to execute both tasks.",
       "createdAt": "2025-10-31T09:22:28Z",
-      "updatedAt": "2025-10-31T09:22:28Z",
+      "updatedAt": "2026-02-26T23:29:38Z",
+      "closedAt": "2026-02-26T23:29:38Z",
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOQMHwq87ufYSC",
+      "title": "Markdown format issue in itemized list",
+      "url": "https://github.com/Razumain/one-signature-certs/issues/22",
+      "state": "OPEN",
+      "author": "ralienpp",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "It is currently rendered as such:\n\n> Examples include: - For XML Signatures , the hash of the SignedInfo element. - For CMS Signatures , the DER-encoded SignedAttributes structure. - For other formats, the data structure input directly to the signature algorithm.\n\nPerhaps another `\\n` after \"include:\" can address that.",
+      "createdAt": "2026-02-27T14:06:29Z",
+      "updatedAt": "2026-02-27T14:06:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOQMHwq87ufgCi",
+      "title": "Default binding explanation not clear",
+      "url": "https://github.com/Razumain/one-signature-certs/issues/23",
+      "state": "OPEN",
+      "author": "ralienpp",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The text says:\n\n> In this case, the `dataTbsHash` value is the hash of the exact data that is hashed and signed by the signature format in use.\n\nIt sounds like you hash it twice, i.e. `dataTbsHash = hash(data)` (\"hash of the exact data\"), and then again `sign(hash(dataTbshash), ...)` (\"that is hashed and signed...).\n",
+      "createdAt": "2026-02-27T14:13:57Z",
+      "updatedAt": "2026-02-27T14:13:57Z",
       "closedAt": null,
       "comments": []
     }
@@ -550,6 +582,42 @@
         "oid": "9dbc856d8b5438788cd4d583fd33d45c61ea244a"
       },
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOQMHwq87GfzA0",
+      "title": "version 01",
+      "url": "https://github.com/Razumain/one-signature-certs/pull/21",
+      "state": "MERGED",
+      "author": "Razumain",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Introducing security considerations and IANA considerations",
+      "createdAt": "2026-02-26T10:27:09Z",
+      "updatedAt": "2026-02-26T23:29:49Z",
+      "baseRepository": "Razumain/one-signature-certs",
+      "baseRefName": "main",
+      "baseRefOid": "9dbc856d8b5438788cd4d583fd33d45c61ea244a",
+      "headRepository": "Razumain/one-signature-certs",
+      "headRefName": "draft-01",
+      "headRefOid": "8c3b2612a74a02c884e1070432039f62b3f51223",
+      "closedAt": "2026-02-26T23:29:37Z",
+      "mergedAt": "2026-02-26T23:29:37Z",
+      "mergedBy": "Razumain",
+      "mergeCommit": {
+        "oid": "28c0a86b823d1148379c901d598e97796303389a"
+      },
+      "comments": [
+        {
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "body": "Resolves #12\r\nResolves #17\r\nResolves #14\r\nResolves #13",
+          "createdAt": "2026-02-26T10:49:46Z",
+          "updatedAt": "2026-02-26T10:49:46Z"
+        }
+      ],
       "reviews": []
     }
   ]
