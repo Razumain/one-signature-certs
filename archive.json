@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-01T00:10:47.054205+00:00",
+  "timestamp": "2026-04-09T00:12:02.885309+00:00",
   "repo": "Razumain/one-signature-certs",
   "labels": [
     {
@@ -110,25 +110,41 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-10-31T09:16:12Z",
-      "updatedAt": "2025-10-31T09:16:12Z",
+      "updatedAt": "2026-04-07T13:28:15Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "body": "Discussion moved to: https://github.com/lamps-wg/draft-ietf-lamps-one-signature-certs/issues/2",
+          "createdAt": "2026-04-07T13:28:06Z",
+          "updatedAt": "2026-04-07T13:28:06Z"
+        }
+      ]
     },
     {
       "number": 16,
       "id": "I_kwDOQMHwq87VB73j",
       "title": "Consider relationship with private key usage period",
       "url": "https://github.com/Razumain/one-signature-certs/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "Razumain",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Should we use the private key usage extension here?\nIt kind of makes sense.",
       "createdAt": "2025-10-31T09:17:23Z",
-      "updatedAt": "2025-10-31T09:17:23Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-07T13:29:15Z",
+      "closedAt": "2026-04-07T13:29:15Z",
+      "comments": [
+        {
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "body": "Discussion at last IETF concluded that we should not do this.",
+          "createdAt": "2026-04-07T13:29:15Z",
+          "updatedAt": "2026-04-07T13:29:15Z"
+        }
+      ]
     },
     {
       "number": 17,
@@ -158,9 +174,17 @@
       "labels": [],
       "body": "It is currently rendered as such:\n\n> Examples include: - For XML Signatures , the hash of the SignedInfo element. - For CMS Signatures , the DER-encoded SignedAttributes structure. - For other formats, the data structure input directly to the signature algorithm.\n\nPerhaps another `\\n` after \"include:\" can address that.",
       "createdAt": "2026-02-27T14:06:29Z",
-      "updatedAt": "2026-02-27T14:06:29Z",
+      "updatedAt": "2026-04-07T13:26:47Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "body": "Discussion moved to: https://github.com/lamps-wg/draft-ietf-lamps-one-signature-certs/issues/3",
+          "createdAt": "2026-04-07T13:26:19Z",
+          "updatedAt": "2026-04-07T13:26:19Z"
+        }
+      ]
     },
     {
       "number": 23,
@@ -174,9 +198,24 @@
       "labels": [],
       "body": "The text says:\n\n> In this case, the `dataTbsHash` value is the hash of the exact data that is hashed and signed by the signature format in use.\n\nIt sounds like you hash it twice, i.e. `dataTbsHash = hash(data)` (\"hash of the exact data\"), and then again `sign(hash(dataTbshash), ...)` (\"that is hashed and signed...).\n",
       "createdAt": "2026-02-27T14:13:57Z",
-      "updatedAt": "2026-02-27T14:13:57Z",
+      "updatedAt": "2026-04-07T13:24:02Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for pointing this out. That was not the intention of the text.\n\nI think the confusion is caused by being overly technical with explaining how signatures are created. Which should be obvious.\n\nIt could be simplified with:\n\n\"In this case, the `dataTbsHash` value is the hash of the exact data that is signed by the signature format in use.\"\n\nI'm not sure if we need to say more than this. What do you think?",
+          "createdAt": "2026-04-07T12:50:39Z",
+          "updatedAt": "2026-04-07T12:50:39Z"
+        },
+        {
+          "author": "Razumain",
+          "authorAssociation": "OWNER",
+          "body": "  Discussion moved to: https://github.com/lamps-wg/draft-ietf-lamps-one-signature-certs/issues/4",
+          "createdAt": "2026-04-07T13:23:33Z",
+          "updatedAt": "2026-04-07T13:23:33Z"
+        }
+      ]
     }
   ],
   "pulls": [
