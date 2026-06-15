@@ -4,7 +4,7 @@
 
 This is the working area for the individual Internet-Draft, "One Signature Certificates".
 
-* [Editor's Copy](https://Razumain.github.io/one-signature-certs/#go.draft-santesson-one-signature-certs.html)
+* [Editor's Copy](https://razumain.github.io/r2ps-ietf-draft/draft-santesson-r2ps.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-santesson-one-signature-certs)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-santesson-one-signature-certs)
 * [Compare Editor's Copy to Individual Draft](https://Razumain.github.io/one-signature-certs/#go.draft-santesson-one-signature-certs.diff)
