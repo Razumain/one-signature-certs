@@ -173,14 +173,14 @@ The signedDocumentBinding extension binds a certificate to a specific signed con
 
 
     name           id-pe-signedDocumentBinding
-    OID            { id-pe TBD }
+    OID            { id-pe 37 }
     syntax         SignedDocumentBinding
     criticality    SHOULD be FALSE
 
     SignedDocumentBinding ::= SEQUENCE {
     dataTbsHash     OCTET STRING,
     hashAlg         DigestAlgorithmIdentifier,
-    bindingType     UTF8String OPTIONAL }
+    bindingType     OBJECT IDENTIFIER OPTIONAL }
 
 
 The dataTbsHash field MUST contain a hash of the data to be signed.
@@ -216,7 +216,7 @@ This bindingType MUST NOT be used when the data to be signed includes either the
 
 ### CAdES Binding
 
-Identifier: "cades"
+Identifier: id-bindingType-cades OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 1}
 
 For CMS {{RFC5652}} or ETSI CAdES {{CADES}} signatures incorporating SigningCertificate or SigningCertificateV2 attributes {{RFC5035}} in signedAttrs,
 the dataTbsHash value is computed over the DER encoding of SignerInfo excluding any instances of SigningCertificate or SigningCertificateV2 attributes from the SignedAttributes set.
@@ -225,7 +225,7 @@ This bindingType also applies to PDF {{ISOPDF2}} and ETSI PAdES {{PADES}} signed
 
 ### XAdES Binding
 
-Identifier: "xades"
+Identifier: id-bindingType-xades OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 2}
 
 For ETSI XML Advanced Electronic Signatures {{XADES}}, the dataTbsHash value is computed over the canonicalized SignedInfo element,
 with any Reference elements whose Type attribute equals "http://uri.etsi.org/01903#SignedProperties" removed prior to hashing.
@@ -235,7 +235,7 @@ Note: This operation is purely textual and does not require XML parsing beyond l
 
 ### JWS Binding
 
-Identifier: "jws"
+Identifier: id-bindingType-jws OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 3}
 
 For JSON Web Signatures (JWS) {{RFC7515}}, the dataTbsHash value is computed over the payload only.
 The protected header and any unprotected header parameters MUST NOT be included in the hash calculation.
@@ -244,7 +244,7 @@ This exclusion avoids circular dependencies where certificate data may appear in
 
 ### COSE Binding
 
-Identifier: "cose"
+Identifier: id-bindingType-cose OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 4}
 
 For COSE signatures {{RFC8152}}, the dataTbsHash value is computed over the payload only.
 The protected header and any unprotected header parameters MUST NOT be included in the hash calculation.
@@ -287,7 +287,11 @@ This exclusion avoids circular dependencies where certificate data may appear in
 
        -- signedDocumentBinding Certificate Extension OID
 
-       id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe TBD }
+       id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe 37 }
+       id-bindingType-cades OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 1}
+       id-bindingType-xades OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 2}
+       id-bindingType-jws OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 3}
+       id-bindingType-cose OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 4}
 
        END
      <CODE ENDS>
