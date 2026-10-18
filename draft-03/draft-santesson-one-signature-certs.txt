@@ -4,8 +4,9 @@
 
 LAMPS                                                       S. Santesson
 Internet-Draft                                           IDsec Solutions
-Intended status: Standards Track                         30 October 2025
-Expires: 3 May 2026
+Intended status: Standards Track                              R. Housley
+Expires: 30 August 2026                                   Vigil Security
+                                                        26 February 2026
 
 
                        One Signature Certificates
@@ -14,12 +15,12 @@ Expires: 3 May 2026
 Abstract
 
    This document defines a profile for certificates that are issued for
-   a single signing operation.  Each certificate is created at the time
-   of signing and bound to the signed content.  The associated signing
-   key is generated and then immediately destroyed after use, and the
-   certificate never expires and is never revoked.  This simplifies
-   long-term validation by removing the need for revocation or
-   expiration handling.
+   validation of the digital signature produced by a single signing
+   operation.  Each certificate is created at the time of signing and
+   bound to the signed content.  The associated signing key is
+   generated, used to produce a single digital signature, and then
+   immediately destroyed.  The certificate never expires and is never
+   revoked, which simplifies long-term validation.
 
 About This Document
 
@@ -47,11 +48,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 May 2026.
+   This Internet-Draft will expire on 30 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -79,63 +80,66 @@ Table of Contents
        3.2.5.  COSE Binding
    4.  ASN.1 Module
    5.  Security Considerations
+     5.1.  Certificates Without Revocation
+     5.2.  Signed Document Binding
    6.  IANA Considerations
+     6.1.  Registry for signedDocumentBinding bindingType Identifiers
+       6.1.1.  Registry Contents
+       6.1.2.  Registration Policy
+       6.1.3.  Initial Registry Contents
    7.  References
      7.1.  Normative References
      7.2.  Informative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
    The landscape of server-based signing services has changed over the
-   last decades.  During the past years one type of signature service
-   has gained a lot of traction where the signing key and signing
-   certificate are created for each instance of signing, rather than re-
-   using a static key and certificate over time.
+   decades.  Recently, one type of signature service has gained favor,
+   where the signing private key and the signing certificate are created
+   for each digital signature, rather than re-using a static key and
+   certificate over an extended time period.
 
    Some reasons why this type of signature services has been successful
    are:
 
    *  The certificate will always have a predictable validity time from
-      the time of signing
+      the time of signing;
 
-   *  The time of signing is guaranteed by the certificate issue date
+   *  The time of signing is guaranteed by the certificate issue date;
 
    *  The identity information in the certificate can be adapted to the
-      signing context for each instance of signing
+      signing context;
 
    *  Revocation of signing certificates is practically non-existent
-      despite many years of operation and millions of signatures.
+      despite many years of operation and millions of signatures; and
 
-   *  Service providers are not bound to using the signature service
-      where the signer's key and certificate is located, but can choose
-      one signature service it integrates with that holds no pre-stored
-      user keys and certificates.
+   *  The signature service holds no pre-stored user keys or
+      certificates.
 
-   While this type of signature service solves a lot of problems, it
-   still suffers from the complexity caused by expiring signing
-   certificates.  One solution to this problem is the Signature
-   Validation Token (SVT) [RFC9321] where future validation can rely on
-   a previous successful validation rather than making a new re-
-   validation based on aging data.
+   While this type of signature service solves many problems, it still
+   suffers from the complexity caused by expiring signing certificates.
+   One solution to this problem is the Signature Validation Token (SVT)
+   [RFC9321], where future validation can rely on a previous successful
+   validation rather than validation based on aging data.
 
-   This document takes this one step further and allows future re-
-   validation at any time in the future as long as trust in the CA
-   certificate can be established.
+   This document takes this one step further and allows validation at
+   any time in the future as long as trust in the CA certificate can be
+   established.
 
 1.1.  Basic features
 
    One signature certificates have the following common characteristics:
 
-   *  They never expire
+   *  They never expire;
 
-   *  They are never revoked
+   *  They are never revoked;
 
-   *  They are bound to a specific document content
+   *  They are bound to a specific document content; and
 
-   *  They assert that the corresponding private key was destroyed after
-      signing
+   *  They assert that the corresponding private key was destroyed
+      immediately after signing.
 
 1.1.1.  Revocation
 
@@ -144,24 +148,24 @@ Table of Contents
    or compromised.  This can lead to large volumes of revocation data.
 
    The fact that the same key is used many times exposes the key for the
-   risk of unauthorized usage or theft.  When many objects are signed
-   with the same key, the risk of exposure and the number of affected
-   signed documents upon revocation increases, unless properly
-   timestamped and properly verified.
+   risks of loss, unauthorized usage, or theft.  When many objects are
+   signed with the same private key, the risk of exposure and the number
+   of affected signed documents upon revocation increases, unless
+   properly timestamped and properly verified.
 
    When a signing key is used only once, that risk of exposure is
-   drastically reduced, and it has been shown that most usages of
-   dedicated keys and certificates no longer require revocation.
+   greatly reduced, and it has been shown that most usages of dedicated
+   private keys and certificates no longer require revocation.
 
-   No CA can guarantee that a certificate is correctly issued.  What the
-   CA does is to attest that a certain procedure was followed when the
-   certificate was issued, and the certificate itself is an attestation
-   that this process was followed successfully when the signature was
-   created.  Certificates issued according to this profile therefore
-   only attest to the validity at the time of issuance and signing,
-   rather than a retroactive state at the time of validation.  This
-   profile is intended for those applications where this declaration of
-   validity is relevant and useful.
+   The CA can readily attest that a certain procedure was followed when
+   the certificate was issued.  As a matter of policy, the certificate
+   itself is an attestation that the CP and CPS [RFC3647] were followed
+   successfully when the signature was created.  Certificates issued
+   according to this profile therefore only attest to the validity at
+   the time of issuance and signing, rather than a retroactive state at
+   the time of validation.  This profile is intended for those
+   applications where this declaration of validity is relevant and
+   useful.
 
    Applications that require traditional revocation checking that
    provides the state at the time of validation MUST NOT use this
@@ -206,24 +210,30 @@ Table of Contents
    extension as non-critical.
 
    name           id-pe-signedDocumentBinding
-   OID            { id-pe TBD }
+   OID            { id-pe 37 }
    syntax         SignedDocumentBinding
    criticality    SHOULD be FALSE
 
    SignedDocumentBinding ::= SEQUENCE {
    dataTbsHash     OCTET STRING,
-   hashAlg         OBJECT IDENTIFIER,
-   bindingType     UTF8String OPTIONAL }
+   hashAlg         DigestAlgorithmIdentifier,
+   bindingType     OBJECT IDENTIFIER OPTIONAL }
 
-   The dataTbsHash field SHALL contain a hash of the data to be signed.
+   The dataTbsHash field MUST contain a hash of the data to be signed.
 
-   The hashAlg field SHALL contain the OID of the hash algorithm used to
-   generate the dataTbsHash value.
+   The hashAlg field MUST contain the AlgorithmIdentifier of the hash
+   algorithm used to generate the dataTbsHash value.
 
    The bindingType field MAY contain an identifier that specifies how
-   the data to be signed is derived from the document to be signed.
-   When this field is omitted, the binding type identifier "default" is
-   implied.
+   the data to be signed is derived from the digital object to be
+   signed.
+
+   Adding this extension to a certificate is a statement by the CA that
+   the signing key is generated exclusively for the purpose of signing
+   the document bound by this extension, and that the signing key is
+   destroyed after signing.  The details for this procedure and how the
+   destruction of the signing key is assured SHOULD be outlined in the
+   certificate policy [RFC3647] of the issued certificate.
 
 3.2.  Defined bindingType identifiers
 
@@ -234,13 +244,9 @@ Table of Contents
    omitted, the rules for the default binding type apply.
 
    The purpose of the dataTbsHash value is to bind the certificate to
-   the document being signed, not to protect the document’s integrity.
-   The integrity of the signed content is provided by the signature
-   itself.  If any byte of the signed document is modified, the
-   calculated hash will no longer match the certificate.  Therefore, the
-   dataTbsHash enables validators and relying parties to confirm that
-   the certificate was issued for the exact content that was signed.
-
+   the document being signed in order to prevent re-use of the signing
+   key for multiple signed documents.  This enforces the contract that
+   the signing key is used only once for creation of one signature only.
    Validators SHOULD verify that the signed document matches the
    certificate’s binding information.  This verification is not required
    for the signature to validate successfully but provides an additional
@@ -251,12 +257,9 @@ Table of Contents
 
 3.2.1.  Default Binding
 
-   Identifier: "default"
-
-   The default binding applies when the bindingType field is absent or
-   set to "default".  In this case, the dataTbsHash value is the hash of
-   the exact data that is hashed and signed by the signature format in
-   use.
+   When the bindingType is absent, the default binding applies.  In this
+   case, the dataTbsHash value is the hash of the exact data that is
+   hashed and signed by the signature format in use.
 
    Examples include: - For XML Signatures [XMLDSIG11], the hash of the
    SignedInfo element. - For CMS Signatures [RFC5652], the DER-encoded
@@ -272,7 +275,8 @@ Table of Contents
 
 3.2.2.  CAdES Binding
 
-   Identifier: "cades"
+   Identifier: id-bindingType-cades OBJECT IDENTIFIER ::= {id-pe-
+   signedDocumentBinding 1}
 
    For CMS [RFC5652] or ETSI CAdES [CADES] signatures incorporating
    SigningCertificate or SigningCertificateV2 attributes [RFC5035] in
@@ -285,7 +289,8 @@ Table of Contents
 
 3.2.3.  XAdES Binding
 
-   Identifier: "xades"
+   Identifier: id-bindingType-xades OBJECT IDENTIFIER ::= {id-pe-
+   signedDocumentBinding 2}
 
    For ETSI XML Advanced Electronic Signatures [XADES], the dataTbsHash
    value is computed over the canonicalized SignedInfo element, with any
@@ -304,7 +309,8 @@ Table of Contents
 
 3.2.4.  JWS Binding
 
-   Identifier: "jws"
+   Identifier: id-bindingType-jws OBJECT IDENTIFIER ::= {id-pe-
+   signedDocumentBinding 3}
 
    For JSON Web Signatures (JWS) [RFC7515], the dataTbsHash value is
    computed over the payload only.  The protected header and any
@@ -316,7 +322,8 @@ Table of Contents
 
 3.2.5.  COSE Binding
 
-   Identifier: "cose"
+   Identifier: id-bindingType-cose OBJECT IDENTIFIER ::= {id-pe-
+   signedDocumentBinding 4}
 
    For COSE signatures [RFC8152], the dataTbsHash value is computed over
    the payload only.  The protected header and any unprotected header
@@ -341,7 +348,12 @@ Table of Contents
         FROM PKIX-CommonTypes-2009  -- RFC 5912
           { iso(1) identified-organization(3) dod(6) internet(1)
             security(5) mechanisms(5) pkix(7) id-mod(0)
-            id-mod-pkixCommon-02(57) } ;
+            id-mod-pkixCommon-02(57) }
+
+        DigestAlgorithmIdentifier
+        FROM CryptographicMessageSyntax-2010 -- RFC 6268
+          { iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1)
+            pkcs-9(9) smime(16) modules(0) id-mod-cms-2009(58) } ;
 
       -- signedDocumentBinding Certificate Extension
 
@@ -351,24 +363,131 @@ Table of Contents
 
       SignedDocumentBinding ::= SEQUENCE {
         dataTbsHash     OCTET STRING,
-        hashAlg         OBJECT IDENTIFIER,
+        hashAlg         DigestAlgorithmIdentifier,
         bindingType     UTF8String OPTIONAL }
 
       -- signedDocumentBinding Certificate Extension OID
 
-      id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe TBD }
+      id-pe-signedDocumentBinding OBJECT IDENTIFIER ::= { id-pe 37 }
+      id-bindingType-cades OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 1}
+      id-bindingType-xades OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 2}
+      id-bindingType-jws OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 3}
+      id-bindingType-cose OBJECT IDENTIFIER ::= {id-pe-signedDocumentBinding 4}
 
       END
    <CODE ENDS>
 
 5.  Security Considerations
 
-   TODO Security Considerations.  Including text on reliance on
-   certificates without revocation.
+5.1.  Certificates Without Revocation
+
+   Certificates conforming to this profile include the id-ce-noRevAvail
+   extension and therefore do not provide any revocation mechanism.
+   Such certificates attest only to the state of trust and correctness
+   of procedures at the time of issuance.
+
+   The Security considerations in [RFC9608] also applies to this
+   document.
+
+5.2.  Signed Document Binding
+
+   The signedDocumentBinding extension binds the certificate to specific
+   signed content by including a hash of the data to be signed.
+   Verification of this binding is not required for successful
+   cryptographic validation of the signature.  A signature can therefore
+   validate correctly even if the binding is not checked.
+
+   However, a relying party SHOULD verify that the signed content
+   matches the dataTbsHash value in the signedDocumentBinding extension.
+   Performing this check ensures that the certificate is used only with
+   the content for which it was issued and enforces the intended scope
+   of the certificate.
+
+   The security model of this profile states that the associated private
+   key is generated for, and used in, exactly one signing operation and
+   is then destroyed.  This property holds independently of whether the
+   binding is verified by the relying party.  Nevertheless, failure to
+   verify the binding weakens the protections provided by this profile
+   and increases the risk of certificate substitution or unintended
+   certificate reuse.
+
+   When verified, the signedDocumentBinding extension provides an
+   additional safeguard against the use of the certificate for any
+   signature other than the one for which it was issued.
 
 6.  IANA Considerations
 
-   TBD IANA registry for bindingType identifiers
+6.1.  Registry for signedDocumentBinding bindingType Identifiers
+
+   IANA is requested to create a new registry entitled: “Signed Document
+   Binding Type Identifiers”
+
+   This registry shall contain identifiers used in the bindingType field
+   of the signedDocumentBinding certificate extension defined in this
+   document.
+
+6.1.1.  Registry Contents
+
+   Each registry entry shall contain the following fields:
+
+   *  Identifier: A UTF-8 string identifying the binding type.
+
+   *  Description: A brief description of how the dataTbsHash value is
+      computed.
+
+   *  Reference: A reference to the document that defines the binding
+      type.
+
+6.1.2.  Registration Policy
+
+   The registration policy for this registry is Specification Required
+   as defined in [RFC8174].
+
+   The designated expert(s) SHALL ensure that:
+
+   *  The binding type definition clearly specifies a deterministic and
+      unambiguous procedure for computing the dataTbsHash value.
+
+   *  The specification explains how circular dependencies with
+      certificate inclusion are avoided, where applicable.
+
+   *  The identifier is unique within the registry.
+
+6.1.3.  Initial Registry Contents
+
+   IANA is requested to populate the registry with the following initial
+   values:
+
+   *  Identifier: (absent)
+
+   *  Description: Default binding as defined in this document
+
+   *  Reference: This document
+
+   *  Identifier: cades
+
+   *  Description: CMS/CAdES binding excluding SigningCertificate
+      attributes
+
+   *  Reference: This document
+
+   *  Identifier: xades
+
+   *  Description: XAdES binding excluding SignedProperties reference
+
+   *  Reference: This document
+
+   *  Identifier: jws
+
+   *  Description: JWS payload-only binding
+
+   *  Reference: This document
+
+   *  Identifier: cose
+
+   *  Description: COSE payload-only binding
+
+   *  Reference: This document
 
 7.  References
 
@@ -391,6 +510,12 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3647]  Chokhani, S., Ford, W., Sabett, R., Merrill, C., and S.
+              Wu, "Internet X.509 Public Key Infrastructure Certificate
+              Policy and Certification Practices Framework", RFC 3647,
+              DOI 10.17487/RFC3647, November 2003,
+              <https://www.rfc-editor.org/rfc/rfc3647>.
 
    [RFC5035]  Schaad, J., "Enhanced Security Services (ESS) Update:
               Adding CertID Algorithm Agility", RFC 5035,
@@ -445,7 +570,7 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
    Stefan Santesson
    IDsec Solutions AB
@@ -453,3 +578,10 @@ Author's Address
    SE-223 70 Lund
    Sweden
    Email: sts@aaa-sec.com
+
+
+   Russ Housley
+   Vigil Security, LLC
+   Herndon, VA,
+   United States of America
+   Email: housley@vigilsec.com
